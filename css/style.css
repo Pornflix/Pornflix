@@ -62,28 +62,20 @@ h1 {
 #content {
     margin: 0;
     padding: 0;
-    #border-style: solid;
-    #border-color: #FFFFFF;
-    #border-width: 1px;
-    overflow: hidden;
 }
 
 #content ul {
     margin: 0;
     padding: 0;
-    float: left;
-    width: 100%;
-    display: flex;
-    justify-content: space-around;
-    display: inline-flex;
-    flex-wrap: wrap;
+    overflow: hidden;
 }
 
 #content li {
-    margin: auto;
+    margin: 0;
     padding: 0;
     list-style-type: none;
     text-align: center;
+    float: left;
 }
 
 #content p {

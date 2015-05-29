@@ -17,7 +17,7 @@
         while ($row = $result->fetch_assoc()) {
             $id = $row['id'];
             $name = $row['name'];
-            $added = $row['added'];
+            $date = $row['added'];
             $content .= "<row id=\"$id\" name=\"$name\" date=\"$date\"></row>\n";
         }
         $content .= "</videos>";

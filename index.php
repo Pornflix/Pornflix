@@ -12,7 +12,6 @@
     <?php
         include_once "php/header.php";
         include "php/videos.php";
-
     ?>
     <div id="content">
         <ul>
