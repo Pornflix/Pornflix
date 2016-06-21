@@ -3,9 +3,9 @@
 class DefaultPage {
     static function generateHeader() {
         $title = "Home";
-        $site = "Pornflix";
+        $site = "Netflix";
 
-
+	echo "<!DOCTYPE html>\n";
         echo "<html>\n\n";
         echo "<head>\n";
         echo "\t<title>$title - $site</title>\n\n";
