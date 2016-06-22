@@ -31,7 +31,7 @@ Helper.safeElement = function(string, className, parent) {
     }
 
     return element;
-}
+};
 
 Helper.safeTextNode = function(string, parent) {
     if(string == null || typeof string == 'undefined') {
@@ -51,4 +51,4 @@ Helper.safeTextNode = function(string, parent) {
     }
 
     return textNode;
-}
+};

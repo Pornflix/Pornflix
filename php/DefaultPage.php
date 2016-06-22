@@ -11,6 +11,7 @@ class DefaultPage {
         echo "\t<title>$title - $site</title>\n\n";
         echo "\t<script language=\"javascript\" src=\"../js/Pornflix.js\" ></script>\n";
         echo "\t<script language=\"javascript\" src=\"../js/Helper.js\" ></script>\n";
+		echo "\t<script language=\"javascript\" src=\"../js/XHR.js\" ></script>\n";
         echo "\t<script src=\"https://use.fontawesome.com/3d3b4a3821.js\"></script>\n";
         echo "\t<link rel=\"shortcut icon\" href=\"../images/pornflix.ico\">\n";
         echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/style.css\">\n";

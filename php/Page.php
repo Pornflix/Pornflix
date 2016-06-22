@@ -2,11 +2,17 @@
 
 class Page {
     function generate() {
-        $dp = new DefaultPage;
+		if (isset($_GET['webservice']) || isset($_GET['jsonservice'])) {
+			$ws = new WebService();
+			$ws->processWebService();
+            return;
+		} else {
+			$dp = new DefaultPage;
 
-        $dp::generateHeader();
-        $dp::generateBody();
-        $dp::generateFooter();
+			$dp::generateHeader();
+			$dp::generateBody();
+			$dp::generateFooter();
+		}
     }
 }
 

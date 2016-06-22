@@ -1,5 +1,5 @@
 function Pornflix(parent) {
-    this.parent = parent;
+	this.parent = parent;
     this.draw();
 }
 
@@ -46,6 +46,6 @@ Pornflix.prototype.draw = function() {
         preview[i].setAttribute("width", "200px");
         videoTitle[i] = Helper.safeElement("div", "video-title", video[i]);
         Helper.safeTextNode(videoTitles[i], videoTitle[i]);
-
     }
-}
+	new XHR(container, "memes", this.draw, this);
+};
