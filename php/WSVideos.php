@@ -17,9 +17,11 @@ class WSVideos extends WebService {
 		$sql = "SELECT `id`,`name` FROM videos;";
 		$result = $mysql->query($sql);
 
+		$i = 0;
 		while ($row = $result->fetch_assoc()) {
-			$encode['id'] = $row['id'];
-			$encode['name'] = $row['name'];
+			$encode[$i]['id'] =  $row['id'];
+			$encode[$i]['name'] = $row['name'];
+			$i++;
 		}
 
 		$mysql->close();

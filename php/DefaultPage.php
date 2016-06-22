@@ -9,6 +9,8 @@ class DefaultPage {
         echo "<html>\n\n";
         echo "<head>\n";
         echo "\t<title>$title - $site</title>\n\n";
+		echo "\t<meta content=\"text/html;charset=utf-8\" http-equiv=\"Content-Type\">\n";
+		echo "\t<meta content=\"utf-8\" http-equiv=\"encoding\">\n";
         echo "\t<script language=\"javascript\" src=\"../js/Pornflix.js\" ></script>\n";
         echo "\t<script language=\"javascript\" src=\"../js/Helper.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/XHR.js\" ></script>\n";

@@ -27,25 +27,30 @@ Pornflix.prototype.draw = function() {
     searchIcon.setAttribute("aria-hidden", "true");
 
 
-    var container = Helper.safeElement("div", "container", this.parent);
-    var row = Helper.safeElement("ul", "row", container);
-    var title  = Helper.safeElement("div", "title", row);
-    var genre = Helper.safeElement("div", "genre", title);
-    Helper.safeTextNode("Recommended for you", genre);
-    var more = Helper.safeElement("div", "more", title);
-    Helper.safeTextNode("More >>", more);
-
-    var video = [];
-    var preview = [];
-    var videoTitle = [];
-    var videoTitles = ["Parks and Recreation", "The Office", "How I Met Your Mother", "Scrubs", "The IT Crowd"];
-    for(var i = 0; i < 5; i++) {
-        video[i] = Helper.safeElement("li", "video", row);
-        preview[i] = Helper.safeElement("img", "preview", video[i]);
-        preview[i].setAttribute("src", "../images/" + (1 + i) + ".jpg");
-        preview[i].setAttribute("width", "200px");
-        videoTitle[i] = Helper.safeElement("div", "video-title", video[i]);
-        Helper.safeTextNode(videoTitles[i], videoTitle[i]);
-    }
-	new XHR(container, "memes", this.draw, this);
+    this.container = Helper.safeElement("div", "container", this.parent);
+	new XHR(this.container, "?webservice=WSVideos&method=memes", this.videoRows, this);
 };
+
+Pornflix.prototype.videoRows = function(json) {
+	var imageWidth = 200;
+	var row = Helper.safeElement("ul", "row", this.container);
+	row.setAttribute("style", "width: " + Math.floor(window.innerWidth/(imageWidth+20))*(imageWidth+20) + "px;");
+	var title  = Helper.safeElement("div", "title", row);
+	var genre = Helper.safeElement("div", "genre", title);
+	Helper.safeTextNode("Recommended for you", genre);
+	var more = Helper.safeElement("div", "more", title);
+	Helper.safeTextNode("More >>", more);
+
+	var videoContainer = Helper.safeElement("div", "video-container", row);
+	var video = [];
+	var preview = [];
+	var videoTitle = [];
+	for(var i = 0; i < json.length; i++) {
+		video[i] = Helper.safeElement("li", "video", videoContainer);
+		preview[i] = Helper.safeElement("img", "preview", video[i]);
+		preview[i].setAttribute("src", "../images/" + json[i].id + ".jpg");
+		preview[i].setAttribute("width", imageWidth + "px");
+		videoTitle[i] = Helper.safeElement("div", "video-title", video[i]);
+		Helper.safeTextNode(json[i].name, videoTitle[i]);
+	}
+}

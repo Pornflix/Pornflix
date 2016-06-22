@@ -127,17 +127,15 @@ body {
 
 .row {
     margin: 0 auto;
-    padding: 10px 10px;
-    overflow: hidden;
-    width: 90%;
+    padding: 10px;
     color: #FFFFFF;
     font-weight: 300;
 }
 
 .title {
     margin: 0;
-    padding: 0 10px;
-    overflow: hidden;
+	padding: 0 10px;
+	overflow: hidden;
 }
 
 .genre {
@@ -148,12 +146,16 @@ body {
     float: right;
 }
 
+.video-container {
+	margin: auto;
+	padding: 0;
+}
+
 .video {
     margin: 0;
     padding: 10px 10px;
-    float: left
     list-style-type: none;
-    display: inline-block;
+	display: inline-block;
 }
 
 .preview {

@@ -1,6 +1,6 @@
 function XHR(container, url, onComplete, onCompleteReference, method) {
 	this.container = container;
-	this.url = "?webservice=WSVideos&method=memes";
+	this.url = url;
 	this.onComplete = onComplete;
 	this.onCompleteReference = onCompleteReference;
 	this.method = method || "GET";
@@ -22,7 +22,7 @@ XHR.prototype.send = function() {
 
 		var result = Array();
 
-		that.checkResponseForTimeout(that.xmlhttp, result, that.url);
+		that.checkResponseForTimeout(result);
 
 		if (result[0] == true && result[1] != "")
 		{
@@ -30,7 +30,7 @@ XHR.prototype.send = function() {
 		}
 		else
 		{
-			that.xmlDoc = "<error>No data returned</error>";
+			that.xmlDoc = '{"error":"There was no data returned"}';
 		}
 
 		that.returnResult();
@@ -50,13 +50,12 @@ XHR.prototype.send = function() {
 
 XHR.prototype.checkResponseForTimeout = function(result)
 {
-
     var json = null;
 
     result[0] = false;
     result[1] = json;
 
-    if (this.xmlhttp.responseText.length == 0)
+    if (this.xmlhttp.response.length == 0)
     {
         if (typeof url != 'undefined')
         {
@@ -71,7 +70,7 @@ XHR.prototype.checkResponseForTimeout = function(result)
     }
     else
     {
-        json = JSON.parse(this.xmlhttp.responseText);
+        json = JSON.parse(this.xmlhttp.response);
 
         result[1] = json;
 
@@ -80,7 +79,7 @@ XHR.prototype.checkResponseForTimeout = function(result)
             if (json.error == "invalidsession")
             {
 
-                console.log ("checkResponseForTimeout(): ERROR: " + xmlhttp.responseText);
+                console.log ("checkResponseForTimeout(): ERROR: " + xmlhttp.response);
 
                 window.location.href=window.location.href;
 
@@ -90,10 +89,15 @@ XHR.prototype.checkResponseForTimeout = function(result)
     }
 
     result[0] = true;
-
     return;
 };
 
 XHR.prototype.returnResult = function() {
-	console.log(this.xmlDoc, this.xmlhttp);
-};
+	if (this.onCompleteReference != null && this.onComplete != null)
+    {
+        this.onComplete.call(this.onCompleteReference, this.xmlDoc, this.xmlhttp);
+    }
+    else if (this.onComplete != null)
+    {
+        this.onComplete(this.xmlDoc, this);
+    }};
