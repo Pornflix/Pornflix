@@ -5,9 +5,9 @@ include_once('WebService.php');
 class WSVideos extends WebService {
 	function memes() {
 		$servername = "127.0.0.1";
-		$username = "root";
-		$password = "Shylah6525";
-		$dbname = "SFW";
+		$username = Constants::getMySQLUser();
+		$password = Constants::getMySQLPass();
+		$dbname = Constants::getDBName();
 		$encode = array();
 
 		$mysql = new mysqli($servername, $username, $password, $dbname);

@@ -6,19 +6,23 @@ function Pornflix(parent) {
 Pornflix.prototype.draw = function() {
 
     var header = Helper.safeElement("div", "header", this.parent);
-    var logo = Helper.safeElement("div", "header-logo", header);
-    Helper.safeTextNode("Netflix", logo);
+	var logoLink = Helper.safeElement("a", "logo-link", header);
+	logoLink.setAttribute("href", "/");
+    var logo = Helper.safeElement("div", "header-logo", logoLink);
+    Helper.safeTextNode(Constants.site, logo);
 
     var menu = Helper.safeElement("ul", "menu", header);
-    var menuItem1 = Helper.safeElement("li", "menu-item", menu)
+	var menuItemLink1 = Helper.safeElement("a", "menu-item-link", menu);
+    var menuItem1 = Helper.safeElement("li", "menu-item", menuItemLink1)
     Helper.safeTextNode("Categories", menuItem1);
-    var menuItem2 = Helper.safeElement("li", "menu-item", menu);
+	var menuItemLink2 = Helper.safeElement("a", "menu-item-link", menu);
+    var menuItem2 = Helper.safeElement("li", "menu-item", menuItemLink2);
     Helper.safeTextNode("Actors", menuItem2);
 
     var profile = Helper.safeElement("div", "profile", header);
     var profilePicture = Helper.safeElement("span", "profile-picture", profile);
     var profileName = Helper.safeElement("span", "profile-name", profile);
-    Helper.safeTextNode("John Smith", profileName);
+    Helper.safeTextNode(Constants.user, profileName);
 
     var search = Helper.safeElement("div", "search", header);
     var searchBar = Helper.safeElement("input", "search-bar", search);
@@ -39,17 +43,22 @@ Pornflix.prototype.videoRows = function(json) {
 	var genre = Helper.safeElement("div", "genre", title);
 	Helper.safeTextNode("Recommended for you", genre);
 	var more = Helper.safeElement("div", "more", title);
-	Helper.safeTextNode("More >>", more);
+	Helper.safeTextNode("More", more);
+	var moreChevron = Helper.safeElement("i", "fa fa-chevron-right more-chevron", more);
 
 	var videoContainer = Helper.safeElement("div", "video-container", row);
-	var video = [];
-	var preview = [];
-	var videoTitle = [];
+	var video = Array();
+	var preview = Array();
+	var previewLink = Array();
+	var videoTitle = Array();
 	for(var i = 0; i < json.length; i++) {
 		video[i] = Helper.safeElement("li", "video", videoContainer);
-		preview[i] = Helper.safeElement("img", "preview", video[i]);
-		preview[i].setAttribute("src", "../images/" + json[i].id + ".jpg");
+		previewLink[i] = Helper.safeElement("a", "preview-link", video[i]);
+		previewLink[i].setAttribute("href", "#");
+		preview[i] = Helper.safeElement("img", "preview", previewLink[i]);
+		preview[i].setAttribute("src", "../Data/" + Constants.sfw + "/" + json[i].id + ".jpg");
 		preview[i].setAttribute("width", imageWidth + "px");
+		preview[i].setAttribute("height", 113 + "px")
 		videoTitle[i] = Helper.safeElement("div", "video-title", video[i]);
 		Helper.safeTextNode(json[i].name, videoTitle[i]);
 	}

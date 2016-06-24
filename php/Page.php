@@ -7,6 +7,8 @@ class Page {
 			$ws->processWebService();
             return;
 		} else {
+			$constants = new Constants();
+
 			$dp = new DefaultPage;
 
 			$dp::generateHeader();
