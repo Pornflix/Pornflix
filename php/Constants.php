@@ -9,6 +9,14 @@ class Constants implements Configuration {
         return self::TEST_SITE;
     }
 
+	static function getSiteName() {
+		if(!self::getSFW()) {
+			return self::NSFW_SITE_NAME;
+		} else {
+			return self::SFW_SITE_NAME;
+		}
+	}
+
 	static function getMySQLUser() {
 		return self::MYSQL_USER;
 	}
@@ -17,11 +25,23 @@ class Constants implements Configuration {
 		return self::MYSQL_PASS;
 	}
 
+	static function getMySQLDomain() {
+		return self::MYSQL_DOMAIN;
+	}
+
 	static function getDBName() {
 		if(!self::getSFW()) {
 			return self::NSFW_DATABASE;
 		} else {
 			return self::SFW_DATABASE;
+		}
+	}
+
+	static function getImageDir() {
+		if(!self::getSFW()) {
+			return self::NSFW_IMAGE_DIR;
+		} else {
+			return self::SFW_IMAGE_DIR;
 		}
 	}
 }

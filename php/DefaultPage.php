@@ -3,7 +3,7 @@
 class DefaultPage {
     static function generateHeader() {
         $title = "Home";
-        $site = "Netflix";
+        $site = Constants::getSiteName();
 
 	echo "<!DOCTYPE html>\n";
         echo "<html>\n\n";
@@ -15,9 +15,9 @@ class DefaultPage {
         echo "\t<script language=\"javascript\" src=\"../js/Helper.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/XHR.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/Constants.js\" ></script>\n";
-        echo "\t<script src=\"https://use.fontawesome.com/3d3b4a3821.js\"></script>\n";
+		echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/style.css\">\n";
         echo "\t<link rel=\"shortcut icon\" href=\"../images/pornflix.ico\">\n";
-        echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/style.css\">\n";
+		echo "\t<script src=\"https://use.fontawesome.com/874a48e914.js\"></script>\n";
         echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300\">\n";
         echo "</head>\n\n";
         echo "<body>\n";

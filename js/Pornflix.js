@@ -1,10 +1,14 @@
 function Pornflix(parent) {
 	this.parent = parent;
-    this.draw();
+	new XHR(null, "?webservice=WSConstants&method=getConstants", this.setConstants, this);
+}
+
+Pornflix.prototype.setConstants = function(json) {
+	Parameters(json);
+	this.draw();
 }
 
 Pornflix.prototype.draw = function() {
-
     var header = Helper.safeElement("div", "header", this.parent);
 	var logoLink = Helper.safeElement("a", "logo-link", header);
 	logoLink.setAttribute("href", "/");
@@ -30,9 +34,10 @@ Pornflix.prototype.draw = function() {
     var searchIcon = Helper.safeElement("i", "fa fa-search search-icon", search);
     searchIcon.setAttribute("aria-hidden", "true");
 
-
     this.container = Helper.safeElement("div", "container", this.parent);
-	new XHR(this.container, "?webservice=WSVideos&method=memes", this.videoRows, this);
+	for(var i = 0; i < Object.keys(Constants.feedName).length; i++) {
+		new XHR(this.container, "?webservice=WSVideos&method=getVideoNames&feedName=" + Constants.feedName[i], this.videoRows, this);
+	}
 };
 
 Pornflix.prototype.videoRows = function(json) {
@@ -41,7 +46,7 @@ Pornflix.prototype.videoRows = function(json) {
 	row.setAttribute("style", "width: " + Math.floor(window.innerWidth/(imageWidth+20))*(imageWidth+20) + "px;");
 	var title  = Helper.safeElement("div", "title", row);
 	var genre = Helper.safeElement("div", "genre", title);
-	Helper.safeTextNode("Recommended for you", genre);
+	Helper.safeTextNode(json.feedName, genre);
 	var more = Helper.safeElement("div", "more", title);
 	Helper.safeTextNode("More", more);
 	var moreChevron = Helper.safeElement("i", "fa fa-chevron-right more-chevron", more);
@@ -51,15 +56,15 @@ Pornflix.prototype.videoRows = function(json) {
 	var preview = Array();
 	var previewLink = Array();
 	var videoTitle = Array();
-	for(var i = 0; i < json.length; i++) {
+	for(var i = 0; i < json.video.length; i++) {
 		video[i] = Helper.safeElement("li", "video", videoContainer);
 		previewLink[i] = Helper.safeElement("a", "preview-link", video[i]);
-		previewLink[i].setAttribute("href", "#");
+		previewLink[i].setAttribute("href", "/?video=" + json.video[i].id);
 		preview[i] = Helper.safeElement("img", "preview", previewLink[i]);
-		preview[i].setAttribute("src", "../Data/" + Constants.sfw + "/" + json[i].id + ".jpg");
+		preview[i].setAttribute("src", "../" + Constants.imageDir + "/" + json.video[i].id + ".jpg");
 		preview[i].setAttribute("width", imageWidth + "px");
 		preview[i].setAttribute("height", 113 + "px")
-		videoTitle[i] = Helper.safeElement("div", "video-title", video[i]);
-		Helper.safeTextNode(json[i].name, videoTitle[i]);
+		videoTitle[i] = Helper.safeElement("div", "video-title ellipsis", video[i]);
+		Helper.safeTextNode(json.video[i].name, videoTitle[i]);
 	}
 }

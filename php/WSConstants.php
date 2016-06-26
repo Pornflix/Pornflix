@@ -1,0 +1,31 @@
+<?php
+
+include_once('WebService.php');
+
+class WSConstants extends WebService {
+	function getConstants() {
+		$encode = array(
+			'site' => Constants::getSiteName(),
+			'imageDir' => Constants::getImageDir()
+		);
+
+		return json_encode($encode);
+	}
+
+	function process() {
+		if (isset($_GET['method']))
+		{
+			$method = $_GET['method'];
+
+			$content = $this->$method();
+
+			echo $content;
+		}
+		else
+		{
+			echo "<WSYGSMS__process>Method Not Set</WSYGSMS__process>";
+		}
+	}
+}
+
+?>

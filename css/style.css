@@ -95,6 +95,7 @@ a {
 }
 
 .search-icon {
+	padding-right: 5px;
     height: 30px;
     width: 20px;
     float: right;
@@ -102,7 +103,6 @@ a {
     font-size: 16px;
     color: #303030;
     background-color: #FFFFFF;
-    padding: 0;
     font-size: 0;
     display: inline-block;
 }
@@ -140,7 +140,6 @@ a {
 .container {
     padding: 20px 0;
     background-color: #2b2b2b;
-    height: 800px;
 }
 
 .row {
@@ -187,6 +186,7 @@ a {
 	padding: 0;
 	float: left;
 	object-fit: cover;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.3)
 }
 
 .preview:hover {
@@ -195,10 +195,17 @@ a {
 }
 
 .video-title {
-    margin: 0;
+    margin: 3px 0 0 0;
     padding: 0;
-    float:right;
+    float: right;
     clear: both;
 	color: #808080;
 	font-size: 14px;
+}
+
+.ellipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
 }

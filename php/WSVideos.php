@@ -3,14 +3,16 @@
 include_once('WebService.php');
 
 class WSVideos extends WebService {
-	function memes() {
-		$servername = "127.0.0.1";
-		$username = Constants::getMySQLUser();
-		$password = Constants::getMySQLPass();
-		$dbname = Constants::getDBName();
-		$encode = array();
+	function getVideoNames() {
+		$feedName = $_GET['feedName'];
 
-		$mysql = new mysqli($servername, $username, $password, $dbname);
+		$host = Constants::getMySQLDomain();
+		$user = Constants::getMySQLUser();
+		$pass = Constants::getMySQLPass();
+		$db = Constants::getDBName();
+		$encode = array('video' => [], 'feedName'=> $feedName);
+
+		$mysql = new mysqli($host, $user, $pass, $db);
 		if ($mysql->connect_error) {
 			die ("Connection failed: " . $mysql->connect_error);
 		}
@@ -19,8 +21,8 @@ class WSVideos extends WebService {
 
 		$i = 0;
 		while ($row = $result->fetch_assoc()) {
-			$encode[$i]['id'] =  $row['id'];
-			$encode[$i]['name'] = $row['name'];
+			$encode['video'][$i]['id'] =  $row['id'];
+			$encode['video'][$i]['name'] = $row['name'];
 			$i++;
 		}
 
