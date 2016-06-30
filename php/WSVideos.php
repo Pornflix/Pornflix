@@ -30,6 +30,10 @@ class WSVideos extends WebService {
 		return json_encode($encode);
 	}
 
+	function getRecommendedVideos() {
+		
+	}
+
 	function process() {
 		if (isset($_GET['method']))
 		{
