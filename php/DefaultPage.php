@@ -5,7 +5,7 @@ class DefaultPage {
         $title = "Home";
         $site = Constants::getSiteName();
 
-	echo "<!DOCTYPE html>\n";
+		echo "<!DOCTYPE html>\n";
         echo "<html>\n\n";
         echo "<head>\n";
         echo "\t<title>$title - $site</title>\n\n";
@@ -19,6 +19,7 @@ class DefaultPage {
         echo "\t<script language=\"javascript\" src=\"../js/Helper.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/XHR.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/Constants.js\" ></script>\n";
+		echo "\t<script src=\"http://vjs.zencdn.net/5.10.4/video.js\"></script>\n";
 		echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/style.css\">\n";
         echo "\t<link rel=\"shortcut icon\" href=\"../images/pornflix.ico\">\n";
 		echo "\t<script src=\"https://use.fontawesome.com/874a48e914.js\"></script>\n";
@@ -33,8 +34,11 @@ class DefaultPage {
 		if(isset($_GET['view'])) {
 			$view = ", \"" . $_GET['view'] . "\"";
 		}
+		if(isset($_GET['id'])) {
+			$params = ", \"" . $_GET['id'] . "\"";
+		}
         echo "\t<div id=\"system\"></div>\n";
-        echo "\t<script>\n\t\tvar System = new Pornflix(document.getElementById('system')$view);\n\t</script>\n";
+        echo "\t<script>\n\t\tvar System = new Pornflix(document.getElementById('system')$view$params);\n\t</script>\n";
     }
 
     static function generateFooter() {

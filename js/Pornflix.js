@@ -1,6 +1,7 @@
-function Pornflix(parent, view) {
+function Pornflix(parent, view, params) {
 	this.parent = parent;
 	this.view = view;
+	this.params = params;
 	new XHR(null, "?webservice=WSConstants&method=getConstants", this.setConstants, this);
 }
 
@@ -15,7 +16,7 @@ Pornflix.prototype.draw = function() {
 
 	switch(this.view) {
 		case "video":
-			new Video(this.container);
+			new Video(this.container, this.params);
 			break;
 		default:
 			new Feed(this.container);

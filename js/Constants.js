@@ -8,6 +8,6 @@ function Parameters(json) {
 			0: "Recommended for you",
 			1: "Amatuer"
 		},
-		imageDir: json.imageDir
+		dataDir: json.dataDir
 	};
 }

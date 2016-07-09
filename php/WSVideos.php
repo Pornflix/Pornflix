@@ -30,8 +30,31 @@ class WSVideos extends WebService {
 		return json_encode($encode);
 	}
 
-	function getRecommendedVideos() {
-		
+	function getVideoInfo() {
+		$id = $_GET['id'];
+
+		$host = Constants::getMySQLDomain();
+		$user = Constants::getMySQLUser();
+		$pass = Constants::getMySQLPass();
+		$db = Constants::getDBName();
+		$encode = array();
+
+		$mysql = new mysqli($host, $user, $pass, $db);
+		if ($mysql->connect_error) {
+			die ("Connection failed: " . $mysql->connect_error);
+		}
+		$sql = "SELECT `id`,`name`,`description`,`views` FROM videos WHERE `id` = $id LIMIT 1;";
+		$result = $mysql->query($sql);
+
+		if($row = $result->fetch_assoc()) {
+			$encode['id'] =  $row['id'];
+			$encode['name'] = $row['name'];
+			$encode['description'] = $row['description'];
+			$encode['views'] = $row['views'];
+		}
+
+		$mysql->close();
+		return json_encode($encode);
 	}
 
 	function process() {

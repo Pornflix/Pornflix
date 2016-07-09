@@ -6,7 +6,7 @@ class WSConstants extends WebService {
 	function getConstants() {
 		$encode = array(
 			'site' => Constants::getSiteName(),
-			'imageDir' => Constants::getImageDir()
+			'dataDir' => Constants::getDataDir()
 		);
 
 		return json_encode($encode);

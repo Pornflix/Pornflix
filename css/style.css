@@ -237,17 +237,26 @@ a {
 }
 
 .video .video {
+	margin: 0;
+	padding: 0;
+}
+
+.vjs-big-play-button {
+	top: 160px !important;
+	left: 278px !important;
 }
 
 .video .video-title {
 	margin: 0;
-	padding: 10px 0;
+	margin-top: 10px;
+	padding: 0;
 	font-size: 20px;
 	font-weight: 300;
 	color: #FFFFFF;
 }
 
 .video .recommended {
+	margin-left: 10px;
 	float: left;
 	display: inline-block;
 }
@@ -255,18 +264,21 @@ a {
 .video .recommended-title {
 	color: #FFFFFF;
 	font-weight: 300;
-	padding-left: 10px;
 }
 
 .video .recommended-list {
 	margin: 0;
 	padding: 0;
+	float: left;
 }
 
 .video .recommended-item {
     margin: 0;
     padding: 0;
     list-style-type: none;
+	position: relative;
+	float: left;
+	clear: both;
 }
 
 .video .preview {
@@ -281,9 +293,15 @@ a {
 	opacity: 0.75;
 }
 
+.video .preview-link {
+	float: left;
+}
+
 .video .preview-title {
     margin: 0;
-    padding: 0;
+    padding: 5px 0 0 0;
 	color: #808080;
 	font-size: 14px;
+	font-weight: 300;
+	float: left;
 }

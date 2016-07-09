@@ -27,9 +27,9 @@ Feed.prototype.draw = function(json) {
 		previewLink[i] = Helper.safeElement("a", "preview-link", video[i]);
 		previewLink[i].setAttribute("href", "/?view=video&id=" + json.video[i].id);
 		preview[i] = Helper.safeElement("img", "preview", previewLink[i]);
-		preview[i].setAttribute("src", "../" + Constants.imageDir + "/" + json.video[i].id + ".jpg");
+		preview[i].setAttribute("src", "../" + Constants.dataDir + "/" + json.video[i].id + "/preview.jpg");
 		preview[i].setAttribute("width", imageWidth + "px");
-		preview[i].setAttribute("height", 113 + "px")
+		preview[i].setAttribute("height", Math.round(((9/16)*imageWidth)) + "px")
 		videoTitle[i] = Helper.safeElement("div", "preview-title ellipsis", video[i]);
 		Helper.safeTextNode(json.video[i].name, videoTitle[i]);
 	}

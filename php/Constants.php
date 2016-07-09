@@ -37,11 +37,11 @@ class Constants implements Configuration {
 		}
 	}
 
-	static function getImageDir() {
+	static function getDataDir() {
 		if(!self::getSFW()) {
-			return self::NSFW_IMAGE_DIR;
+			return self::NSFW_DATA_DIR;
 		} else {
-			return self::SFW_IMAGE_DIR;
+			return self::SFW_DATA_DIR;
 		}
 	}
 }
