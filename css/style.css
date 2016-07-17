@@ -16,9 +16,11 @@ a {
 	color: #FFFFFF;
 }
 
-.system {
+#system {
     margin: 0;
     padding: 0;
+    display: inline-block;
+    width: 100%;
 }
 
 .header {
@@ -27,6 +29,8 @@ a {
     background-color: #e50914;
     color: #FFFFFF;
     line-height: 60px;
+    position: fixed;
+    z-index: 1;
 }
 
 .header .header-logo {
@@ -81,6 +85,13 @@ a {
     overflow: hidden;
     float: right;
     text-align: center;
+}
+
+.header .search-form {
+    margin: 0;
+    height: 30px;
+    width:220px;
+    float: left;
 }
 
 .header .search-bar {
@@ -150,8 +161,11 @@ a {
 }
 
 .feed.container {
+    margin-top: 60px;
     padding: 20px 0;
     background-color: #2b2b2b;
+    display: inline-block;
+    width: 100%;
 }
 
 .feed .row {
@@ -186,7 +200,7 @@ a {
 	padding: 0;
 }
 
-.feed .video {
+.feed .feed-item {
     margin: 0;
     padding: 10px 10px;
     list-style-type: none;
@@ -212,7 +226,8 @@ a {
     float: right;
     clear: both;
 	color: #808080;
-	font-size: 14px;
+	font-size: 13px;
+    font-weight: normal;
 }
 
 .ellipsis {
@@ -222,13 +237,90 @@ a {
     display: block;
 }
 
+.search.container {
+    margin-top: 60px;
+    padding: 20px 0;
+    background-color: #2b2b2b;
+    display: inline-block;
+    width: 100%;
+}
+
+.search .row {
+    margin: 0 auto;
+    padding: 10px;
+    color: #FFFFFF;
+    font-weight: 300;
+}
+
+.search .title {
+    margin: 0;
+	padding: 0 10px;
+	overflow: hidden;
+}
+
+.search .genre {
+    float: left;
+}
+
+.search .more {
+    float: right;
+	vertical-align: middle;
+}
+
+.search .more-chevron {
+	padding-left: 5px;
+	vertical-align: middle;
+}
+
+.search .video-container {
+	margin: auto;
+	padding: 0;
+}
+
+.search .feed-item {
+    margin: 0;
+    padding: 10px 10px;
+    list-style-type: none;
+	display: inline-block;
+}
+
+.search .preview {
+    margin: 0;
+	padding: 0;
+	float: left;
+	object-fit: cover;
+	box-shadow: 0 1px 5px rgba(0,0,0,0.3)
+}
+
+.search .preview:hover {
+	background-color: #000000;
+	opacity: 0.75;
+}
+
+.search .preview-title {
+    margin: 3px 0 0 0;
+    padding: 0;
+    float: right;
+    clear: both;
+	color: #808080;
+	font-size: 13px;
+    font-weight: normal;
+}
+
 .video.container {
-	padding: 20px 80px;
+    margin-top: 60px;
+	padding: 20px 0;
+    width: 100%;
+    min-width: 960px;
 	background-color: #2b2b2b;
+    text-align: center;
+    display: inline-block;
 }
 
 .video .video-container {
 	display: inline-block;
+    text-align: left;
+    width: 940px;
 }
 
 .video .video-info {
@@ -255,8 +347,87 @@ a {
 	color: #FFFFFF;
 }
 
+.video .tags {
+    margin: 0 0 0 10px;
+    padding: 0;
+    float: left;
+    width: 220px;
+}
+
+.video .tags-title {
+    color: #FFFFFF;
+    font-weight: 300;
+}
+
+.video .tags-link {
+    float: left;
+    padding-left: 10px;
+    font-weight: 400;
+    clear: both;
+}
+
+.video .tags-list {
+    margin: 0;
+    margin-left: 20px;
+    padding: 0;
+    float: left;
+    clear: both;
+}
+
+.video .tags-item {
+    margin: 3px 0 3px 5px;
+    padding: 2px 5px;
+    list-style-type: none;
+    display: inline-block;
+    float: left;
+    /*clear:both;*/
+    font-weight: 400;
+    font-size: 15px;
+}
+
+.video .tags-item-extra-male {
+    color: #FFFFFF;
+    background-color: #2196f3;
+}
+
+.video .tags-item-extra-female {
+    color: #FFFFFF;
+    background-color: #ec407a;
+}
+
+.video .tags-item-channel {
+    color: #FFFFFF;
+    background-color: #ab47bc;
+}
+
+.video .tags-item-tags {
+    color: #FFFFFF;
+    background-color: #f44336;
+}
+
+.video .tags-count {
+    margin-left: 7px;
+    color: #E0E0E0;
+}
+
+.video .tags-item-extra-male .tags-count-pornstars {
+    color: #90caf9;
+}
+
+.video .tags-item-extra-female .tags-count-pornstars {
+    color: #f48fb1;
+}
+
+.video .tags-count-channel {
+    color: #ce93d8;
+}
+
+.video .tags-count-tags {
+    color: #ef9a9a;
+}
+
 .video .recommended {
-	margin-left: 10px;
+    clear: both;
 	float: left;
 	display: inline-block;
 }
@@ -273,12 +444,10 @@ a {
 }
 
 .video .recommended-item {
-    margin: 0;
+    margin: 5px 10px;
     padding: 0;
     list-style-type: none;
-	position: relative;
 	float: left;
-	clear: both;
 }
 
 .video .preview {
@@ -299,9 +468,9 @@ a {
 
 .video .preview-title {
     margin: 0;
-    padding: 5px 0 0 0;
 	color: #808080;
 	font-size: 14px;
 	font-weight: 300;
 	float: left;
+    clear: both;
 }

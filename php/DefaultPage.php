@@ -16,6 +16,7 @@ class DefaultPage {
 		echo "\t<script language=\"javascript\" src=\"../js/Footer.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/Feed.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/Video.js\" ></script>\n";
+        echo "\t<script language=\"javascript\" src=\"../js/Search.js\" ></script>\n";
         echo "\t<script language=\"javascript\" src=\"../js/Helper.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/XHR.js\" ></script>\n";
 		echo "\t<script language=\"javascript\" src=\"../js/Constants.js\" ></script>\n";
@@ -24,16 +25,20 @@ class DefaultPage {
         echo "\t<link rel=\"shortcut icon\" href=\"../images/pornflix.ico\">\n";
 		echo "\t<script src=\"https://use.fontawesome.com/874a48e914.js\"></script>\n";
 		echo "\t<link href=\"http://vjs.zencdn.net/5.10.4/video-js.css\" rel=\"stylesheet\">\n";
-        echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300\">\n";
+        echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Source+Sans+Pro:600,400,300\">\n";
         echo "</head>\n\n";
         echo "<body>\n";
     }
 
     static function generateBody() {
 		$view = null;
+        $params = null;
 		if(isset($_GET['view'])) {
 			$view = ", \"" . $_GET['view'] . "\"";
 		}
+        if(isset($_GET['query'])) {
+            $params = ", \"" . $_GET['query']. "\"";
+        }
 		if(isset($_GET['id'])) {
 			$params = ", \"" . $_GET['id'] . "\"";
 		}

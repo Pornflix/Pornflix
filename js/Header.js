@@ -24,8 +24,12 @@ Header.prototype.draw = function() {
 	Helper.safeTextNode(Constants.user, profileName);
 
 	var search = Helper.safeElement("div", "search", header);
-	var searchBar = Helper.safeElement("input", "search-bar", search);
+	var searchForm = Helper.safeElement("form", "search-form", search);
+	var searchBar = Helper.safeElement("input", "search-bar", searchForm);
 	searchBar.setAttribute("placeholder", "Search");
-	var searchIcon = Helper.safeElement("i", "fa fa-search search-icon", search);
+	searchForm.setAttribute("method", "post");
+	searchForm.setAttribute("action", "?view=search&query=");
+	searchForm.setAttribute("onsubmit", "Helper.submitSearch()");
+	var searchIcon = Helper.safeElement("i", "fa fa-search search-icon", searchForm);
 	searchIcon.setAttribute("aria-hidden", "true");
 };

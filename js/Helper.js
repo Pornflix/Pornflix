@@ -52,3 +52,8 @@ Helper.safeTextNode = function(string, parent) {
 
     return textNode;
 };
+
+Helper.submitSearch = function() {
+    var search = document.getElementsByClassName("search-form")[0];
+    search.action += document.getElementsByClassName("search-bar")[0].value;
+}

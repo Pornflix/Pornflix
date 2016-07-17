@@ -18,6 +18,9 @@ Pornflix.prototype.draw = function() {
 		case "video":
 			new Video(this.container, this.params);
 			break;
+		case "search":
+			new Search(this.container, this.params);
+			break;
 		default:
 			new Feed(this.container);
 			break;

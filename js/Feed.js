@@ -9,7 +9,7 @@ function Feed(parent) {
 Feed.prototype.draw = function(json) {
 	var imageWidth = 200;
 	var row = Helper.safeElement("ul", "row", this.parent);
-	row.setAttribute("style", "width: " + Math.floor(window.innerWidth/(imageWidth+20))*(imageWidth+20) + "px;");
+	row.setAttribute("style", "width: " + 4*(imageWidth+20) + "px;");
 	var title  = Helper.safeElement("div", "title", row);
 	var genre = Helper.safeElement("div", "genre", title);
 	Helper.safeTextNode(json.feedName, genre);
@@ -23,7 +23,7 @@ Feed.prototype.draw = function(json) {
 	var previewLink = Array();
 	var videoTitle = Array();
 	for(var i = 0; i < json.video.length; i++) {
-		video[i] = Helper.safeElement("li", "video", videoContainer);
+		video[i] = Helper.safeElement("li", "feed-item", videoContainer);
 		previewLink[i] = Helper.safeElement("a", "preview-link", video[i]);
 		previewLink[i].setAttribute("href", "/?view=video&id=" + json.video[i].id);
 		preview[i] = Helper.safeElement("img", "preview", previewLink[i]);
@@ -31,6 +31,7 @@ Feed.prototype.draw = function(json) {
 		preview[i].setAttribute("width", imageWidth + "px");
 		preview[i].setAttribute("height", Math.round(((9/16)*imageWidth)) + "px")
 		videoTitle[i] = Helper.safeElement("div", "preview-title ellipsis", video[i]);
+		videoTitle[i].style.width = imageWidth + "px";
 		Helper.safeTextNode(json.video[i].name, videoTitle[i]);
 	}
 }
