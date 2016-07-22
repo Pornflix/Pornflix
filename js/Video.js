@@ -26,17 +26,25 @@ Video.prototype.draw = function(json) {
 
 Video.prototype.drawTags = function(json) {
 	var tags = Helper.safeElement("div", "tags", this.videoContainer);
-	var tagsTitle = Helper.safeElement("div", "tags-title", tags);
-	Helper.safeTextNode("Tags", tagsTitle);
 
 	for(var i = 0; i < json.length; i++) {
-		var tagsLink = Helper.safeElement("a", "tags-link", tags);
-		Helper.safeTextNode(json[i].name, tagsLink);
+		var that = this;
+		var tagsName = Helper.safeElement("div", "tags-name", tags);
+		Helper.safeTextNode(json[i].name, tagsName);
 		var tagsList = Helper.safeElement("ul", "tags-list", tags);
 		var tagsItem = Array();
+		var tagsLink = Array();
 		for(var j = 0; j < json[i].tag.length; j++) {
+			tagsLink[j] = Helper.safeElement("a", "tags-link", tagsList);
+			var name = json[i].name.replace(/s$/, "").toLowerCase() + ": " + json[i].tag[j].name + " ";
+			if(json[i].tag[j].name == "Add tag") {
+				tagsLink[j].onclick = function(name) { return function() { var tag = prompt("Change tag to"); new XHR(this.videoContainer, "?webservice=WSVideos&method=addTag&id=" + that.id + "&tag=" + tag); } }(name);
+			} else {
+				tagsLink[j].onclick = function(name) { return function() { Helper.setSearch(name); } }(name);
+
+			}
 			var className = "tags-item tags-item-" + json[i].name.toLowerCase() + " " + (json[i].tag[j].extra ? "tags-item-extra-" + json[i].tag[j].extra.toLowerCase() : "");
-			tagsItem[j] = Helper.safeElement("li", className, tagsList);
+			tagsItem[j] = Helper.safeElement("li", className, tagsLink[j]);
 			Helper.safeTextNode(json[i].tag[j].name, tagsItem[j]);
 			var tagsCount = Helper.safeElement("span", "tags-count tags-count-" + json[i].name.toLowerCase(), tagsItem[j])
 			Helper.safeTextNode(json[i].tag[j].count, tagsCount);

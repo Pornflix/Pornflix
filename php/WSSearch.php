@@ -4,6 +4,7 @@ include_once('WebService.php');
 
 /*
  * LITERALLY NO SANITIZATION OF QUERIES, DON'T MAKE THIS SHIT PUBLIC YOU ASSFACE
+ * I ALSO MAY HAVE LEFT THE MAIN ARRAY NAME AS "MEME"
  */
 
 class WSSearch extends WebService {
@@ -25,53 +26,54 @@ class WSSearch extends WebService {
 
         preg_match_all($pattern, $query . " end:", $matches);
 
-        $meme = array();
-        $final = array();
-        $comma = array();
+        $categories = array();
+        $tags = array();
         for($i = 0; $i < sizeof($matches[0]); $i++) {
-            $meme[$i] = explode(":", $matches[0][$i]);
+            $categories[$i] = explode(":", $matches[0][$i]);
         }
 
         $sql = "SELECT DISTINCT `videos`.`id`, `videos`.`name`\nFROM `videos`\n";
 
-        for($i = 0; $i < sizeof($meme); $i++) {
-            if(sizeof($meme[$i]) == 2) {
-                $sql .= "LEFT JOIN `video_" . $meme[$i][0] . "s` ON `video_" . $meme[$i][0] . "s`.`video` = `videos`.`id`\n";
-                $sql .= "LEFT JOIN `" . $meme[$i][0] . "s` ON `" . $meme[$i][0] . "s`.`id` = `video_" . $meme[$i][0] . "s`.`" . $meme[$i][0] . "`\n";
-            }
-        }
-
         $sql .= "WHERE ";
 
-        for($i = 0; $i < sizeof($meme); $i++) {
-            if(sizeof($meme[$i]) == 1) {
-                $sql .= "`videos`.`name` LIKE '%" . preg_replace("/^\s\s*/", "", preg_replace("/\s\s*$/", "", $meme[$i][0])) . "%'\n";
-            } else {
-                if (strpos($meme[$i][1], ',') !== false) {
-                    $comma = explode(",", $meme[$i][1]);
-                    for($j = 0; $j < sizeof($comma); $j++) {
-                        $sql .=  "`" . $meme[$i][0] . "s`.`name` LIKE '%" . preg_replace("/^\s\s*/", "", preg_replace("/\s\s*$/", "", $comma[$j])) . "%'\n";
-                        if($j != sizeof($comma)-1) {
-                            $sql .= "OR ";
-                        }
-                    }
-                } else {
-                    $sql .= "`" . $meme[$i][0] . "s`.`name` LIKE '%" . preg_replace("/^\s\s*/", "", preg_replace("/\s\s*$/", "", $meme[$i][1])) . "%'\n";
-                }
-            }
+        for($i = 0; $i < sizeof($categories); $i++) {
+			if(sizeof($categories[$i]) == 1) {
+				$sql .= "`videos`.`name` LIKE '%" . preg_replace("/^\s\s*/", "", preg_replace("/\s\s*$/", "", $categories[$i][0])) . "%'\n";
+			} else {
+				if(strpos($categories[$i][1], ',') !== false) {
+					$tags = explode(',', $categories[$i][1]);
+					for($j = 0; $j < sizeof($tags); $j++) {
+						$sql .= "EXISTS (SELECT `videos`.`id`\nFROM `video_" . $categories[$i][0] . "s`\n";
+						$sql .= "LEFT JOIN `" . $categories[$i][0] . "s` ON `" . $categories[$i][0] . "s`.`id` = `video_" . $categories[$i][0] . "s`.`" . $categories[$i][0] . "`\n";
+						$sql .= "WHERE `video_" . $categories[$i][0] . "s`.`video` = `videos`.`id`\nAND `" . $categories[$i][0] . "s`.`name` = '" . preg_replace("/^\s\s*/", "", preg_replace("/\s\s*$/", "", $tags[$j])) . "')\n";
+						if($j != sizeof($tags)-1) {
+							$sql .= "AND ";
+						}
+					}
+				} else {
+					$sql .= "EXISTS (SELECT `videos`.`id`\nFROM `video_" . $categories[$i][0] . "s`\n";
+					$sql .= "LEFT JOIN `" . $categories[$i][0] . "s` ON `" . $categories[$i][0] . "s`.`id` = `video_" . $categories[$i][0] . "s`.`" . $categories[$i][0] . "`\n";
+					$sql .= "WHERE `video_" . $categories[$i][0] . "s`.`video` = `videos`.`id`\nAND `" . $categories[$i][0] . "s`.`name` = '" . preg_replace("/^\s\s*/", "", preg_replace("/\s\s*$/", "", $categories[$i][1])) . "')\n";
+				}
+			}
 
-            if($i != sizeof($meme)-1) {
+            if($i != sizeof($categories)-1) {
                 $sql .= "AND ";
             }
         }
 
 		$result = $mysql->query($sql);
 
-		$i = 0;
-		while($row = $result->fetch_assoc()) {
-			$encode[$i]['id'] =  $row['id'];
-			$encode[$i]['name'] = $row['name'];
-			$i++;
+		if(mysqli_num_rows($result) > 0) {
+			$i = 0;
+			while($row = $result->fetch_assoc()) {
+				$encode['videos'][$i]['id'] =  $row['id'];
+				$encode['videos'][$i]['name'] = $row['name'];
+				$i++;
+			}
+			$encode['results'] = true;
+		} else {
+			$encode['results'] = false;
 		}
 
 		$mysql->close();

@@ -16,7 +16,26 @@ class WSVideos extends WebService {
 		if ($mysql->connect_error) {
 			die ("Connection failed: " . $mysql->connect_error);
 		}
-		$sql = "SELECT `id`,`name` FROM videos LIMIT 8;";
+		$sql = "SELECT `videos`.`id`, `videos`.`name`
+				FROM `videos`\n";
+
+		switch($feedName) {
+			case "Newest":
+				$sql .= "ORDER BY `videos`.`date` DESC";
+				break;
+			case "Anal":
+				$sql .= "LEFT JOIN `video_tags` ON `video_tags`.`video` = `videos`.`id`
+						 LEFT JOIN `tags` ON `tags`.`id` = `video_tags`.`tag`
+						 WHERE `tags`.`name` = 'anal'";
+				break;
+			case "All":
+				break;
+			default:
+				$sql .="";
+		}
+
+		$sql .= "\nLIMIT 8";
+
 		$result = $mysql->query($sql);
 
 		$i = 0;
@@ -109,6 +128,7 @@ class WSVideos extends WebService {
 				array_push($encode[2]['tag'], ['name' => $row['name'], 'count' => $row1['count']]);
 			}
 		}
+		array_push($encode[2]['tag'], ['name' => 'Add tag', 'count' => '+']);
 
 		$sql = "SELECT `pornstars`.`id`, `pornstars`.`name`, `pornstars`.`gender`
 				FROM `pornstars`
@@ -125,8 +145,41 @@ class WSVideos extends WebService {
 			if($row1 = $result1->fetch_assoc()) {
 				$encode[1]['tag'][$i]['count'] = $row1['count'];
 			}
-
 			$i++;
+		}
+		$mysql->close();
+		return json_encode($encode);
+	}
+
+	function addTag() {
+		$id = $_GET['id'];
+		$tag = $_GET['tag'];
+
+		$host = Constants::getMySQLDomain();
+		$user = Constants::getMySQLUser();
+		$pass = Constants::getMySQLPass();
+		$db = Constants::getDBName();
+
+		$mysql = new mysqli($host, $user, $pass, $db);
+		if ($mysql->connect_error) {
+			die ("Connection failed: " . $mysql->connect_error);
+		}
+
+		$sql = "SELECT `id`
+				FROM `tags`
+				WHERE `name` = '$tag'
+				LIMIT 1";
+		$result = $mysql->query($sql);
+		if($row = $result->fetch_assoc()) {
+			$tag_id = $row['id'];
+		}
+
+		$sql = "INSERT INTO video_tags(video, tag, date) VALUES('$id', '$tag_id', CURRENT_TIMESTAMP);";
+
+		if($mysql->query($sql) === TRUE && isset($id) && isset($tag)) {
+			$encode = array('success' => 'true');
+		} else {
+			$encode = array('success' => 'failed');
 		}
 
 		$mysql->close();

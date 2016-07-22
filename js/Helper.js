@@ -57,3 +57,13 @@ Helper.submitSearch = function() {
     var search = document.getElementsByClassName("search-form")[0];
     search.action += document.getElementsByClassName("search-bar")[0].value;
 }
+
+Helper.setSearch = function(value) {
+    var searchBar = document.getElementsByClassName("search-bar")[0];
+    searchBar.value += value || "";
+}
+
+Helper.getSearch = function() {
+    var searchBar = document.getElementsByClassName("search-bar")[0];
+    return searchBar.value;
+}

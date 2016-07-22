@@ -1,7 +1,7 @@
 html {
     margin: 0;
     padding: 0;
-    font-family: 'Source Sans Pro', sans-serif;
+    font-family: 'Roboto', 'Arial', sans-serif;
 }
 
 body {
@@ -348,28 +348,26 @@ a {
 }
 
 .video .tags {
-    margin: 0 0 0 10px;
+    margin: 0;
+    margin-left: 10px;
     padding: 0;
     float: left;
     width: 220px;
 }
 
-.video .tags-title {
+.video .tags-name {
     color: #FFFFFF;
-    font-weight: 300;
-}
-
-.video .tags-link {
     float: left;
-    padding-left: 10px;
+    padding-left: 0px;
     font-weight: 400;
     clear: both;
 }
 
 .video .tags-list {
     margin: 0;
-    margin-left: 20px;
+    margin-left: 10px;
     padding: 0;
+    width: 100%;
     float: left;
     clear: both;
 }

@@ -25,7 +25,7 @@ class DefaultPage {
         echo "\t<link rel=\"shortcut icon\" href=\"../images/pornflix.ico\">\n";
 		echo "\t<script src=\"https://use.fontawesome.com/874a48e914.js\"></script>\n";
 		echo "\t<link href=\"http://vjs.zencdn.net/5.10.4/video-js.css\" rel=\"stylesheet\">\n";
-        echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Source+Sans+Pro:600,400,300\">\n";
+        echo "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"http://fonts.googleapis.com/css?family=Roboto:300,400,500,700\">\n";
         echo "</head>\n\n";
         echo "<body>\n";
     }
@@ -34,13 +34,13 @@ class DefaultPage {
 		$view = null;
         $params = null;
 		if(isset($_GET['view'])) {
-			$view = ", \"" . $_GET['view'] . "\"";
+			$view = ", '" . $_GET['view'] . "'";
 		}
         if(isset($_GET['query'])) {
-            $params = ", \"" . $_GET['query']. "\"";
+            $params = ", {'query': '" . $_GET['query']. "'}";
         }
 		if(isset($_GET['id'])) {
-			$params = ", \"" . $_GET['id'] . "\"";
+			$params = ", {'id': '" . $_GET['id'] . "'}";
 		}
         echo "\t<div id=\"system\"></div>\n";
         echo "\t<script>\n\t\tvar System = new Pornflix(document.getElementById('system')$view$params);\n\t</script>\n";

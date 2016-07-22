@@ -1,5 +1,6 @@
-function Header(parent) {
+function Header(parent, params) {
 	this.parent = parent;
+	this.query = params;
 	this.draw();
 }
 
@@ -27,6 +28,7 @@ Header.prototype.draw = function() {
 	var searchForm = Helper.safeElement("form", "search-form", search);
 	var searchBar = Helper.safeElement("input", "search-bar", searchForm);
 	searchBar.setAttribute("placeholder", "Search");
+	searchBar.value = this.query || "";
 	searchForm.setAttribute("method", "post");
 	searchForm.setAttribute("action", "?view=search&query=");
 	searchForm.setAttribute("onsubmit", "Helper.submitSearch()");
