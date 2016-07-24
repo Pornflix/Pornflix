@@ -1,7 +1,5 @@
 <?php
 
-include_once('WSVideos.php');
-
 class WebService {
 	function processWebService() {
 		if(isset($_GET['webservice'])) {

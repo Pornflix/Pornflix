@@ -1,6 +1,6 @@
 <?php
 
-include_once('WebService.php');
+include_once('../WebService.php');
 
 /*
  * LITERALLY NO SANITIZATION OF QUERIES, DON'T MAKE THIS SHIT PUBLIC YOU ASSFACE

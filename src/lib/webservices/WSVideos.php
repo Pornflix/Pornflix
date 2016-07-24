@@ -1,6 +1,6 @@
 <?php
 
-include_once('WebService.php');
+include_once(dirname(__FILE__) . '/../Webservice.php');
 
 class WSVideos extends WebService {
 	function getVideoNames() {

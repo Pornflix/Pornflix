@@ -1,6 +1,6 @@
 <?php
 
-include_once('WebService.php');
+include_once('../WebService.php');
 
 class WSConstants extends WebService {
 	function getConstants() {
