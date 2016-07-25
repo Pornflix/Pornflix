@@ -8,7 +8,7 @@ class Feed {
 
         for($i = 0; $i < sizeof($feedNames); $i++) {
             $data = (new WSVideos)->getVideoNames($feedNames[$i]);
-            $content .= $this->drawFeeds($data, $feedNames[$i]);
+            $content .= $this->drawFeed($data, $feedNames[$i]);
         }
 
         $content .= "\t\t</div>\n";
@@ -16,7 +16,7 @@ class Feed {
         echo $content;
     }
 
-    function drawFeeds($data, $feedName) {
+    function drawFeed($data, $feedName) {
         $content = "\t\t\t<ul class=\"row\" style=\"width: 900px;\">\n";
         $content .= "\t\t\t\t<div class=\"title\">\n";
         $content .= "\t\t\t\t\t<span class=\"feed-name\">$feedName</span>\n";

@@ -46,9 +46,7 @@ class WSVideos extends Query {
 		return $encode;
 	}
 
-	function getVideoInfo() {
-		$id = isset($_GET['id']) ? $_GET['id'] : '';
-
+	function getVideoInfo($id) {
 		$host = Constants::getMySQLDomain();
 		$user = Constants::getMySQLUser();
 		$pass = Constants::getMySQLPass();
@@ -70,11 +68,10 @@ class WSVideos extends Query {
 		}
 
 		$mysql->close();
-		return json_encode($encode);
+		return $encode;
 	}
 
-	function getTags() {
-		$id = isset($_GET['id']) ? $_GET['id'] : '';
+	function getTags($id) {
 
 		$host = Constants::getMySQLDomain();
 		$user = Constants::getMySQLUser();
@@ -145,7 +142,7 @@ class WSVideos extends Query {
 			$i++;
 		}
 		$mysql->close();
-		return json_encode($encode);
+		return $encode;
 	}
 
 	function addTag() {
