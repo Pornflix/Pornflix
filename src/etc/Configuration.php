@@ -16,6 +16,11 @@ interface Configuration {
 
 	const SFW_DATA_DIR = "data/SFW";
 	const NSFW_DATA_DIR = "data/NSFW";
+
+	const SFW_FEED_NAMES = ["All", "New", "Comedy"];
+	const NSFW_FEED_NAMES = ["All", "Newest", "Anal"];
+
+	const PREVIVEW_SIZE = 200;
 }
 
 ?>

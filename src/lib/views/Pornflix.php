@@ -6,12 +6,15 @@ class Pornflix {
 
         switch($view) {
             case "video":
+                new Header();
                 new Video();
                 break;
             case "search":
+                new Header();
                 new Search();
                 break;
             default:
+                new Header();
                 new Feed();
                 break;
         }

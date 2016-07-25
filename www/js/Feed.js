@@ -11,7 +11,7 @@ Feed.prototype.draw = function(json) {
 	var row = Helper.safeElement("ul", "row", this.parent);
 	row.setAttribute("style", "width: " + 4*(imageWidth+20) + "px;");
 	var title  = Helper.safeElement("div", "title", row);
-	var genre = Helper.safeElement("div", "genre", title);
+	var genre = Helper.safeElement("div", "feed-name", title);
 	Helper.safeTextNode(json.feedName, genre);
 	var more = Helper.safeElement("div", "more", title);
 	Helper.safeTextNode("More", more);

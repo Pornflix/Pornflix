@@ -44,6 +44,14 @@ class Constants implements Configuration {
 			return self::SFW_DATA_DIR;
 		}
 	}
+
+	static function getFeedNames() {
+		if(!self::getSFW()) {
+			return self::NSFW_FEED_NAMES;
+		} else {
+			return self::SFW_FEED_NAMES;
+		}
+	}
 }
 
 ?>

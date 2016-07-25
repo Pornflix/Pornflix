@@ -1,16 +1,13 @@
 <?php
 
-include_once(dirname(__FILE__) . '/../Webservice.php');
-
-class WSVideos extends WebService {
-	function getVideoNames() {
-		$feedName = isset($_GET['feedName']) ? $_GET['feedName'] : '';
+class WSVideos extends Query {
+	function getVideoNames($feedName) {
 
 		$host = Constants::getMySQLDomain();
 		$user = Constants::getMySQLUser();
 		$pass = Constants::getMySQLPass();
 		$db = Constants::getDBName();
-		$encode = array('video' => [], 'feedName'=> $feedName);
+		$encode = array('video' => []);
 
 		$mysql = new mysqli($host, $user, $pass, $db);
 		if ($mysql->connect_error) {
@@ -46,7 +43,7 @@ class WSVideos extends WebService {
 		}
 
 		$mysql->close();
-		return json_encode($encode);
+		return $encode;
 	}
 
 	function getVideoInfo() {
@@ -184,21 +181,6 @@ class WSVideos extends WebService {
 
 		$mysql->close();
 		return json_encode($encode);
-	}
-
-	function process() {
-		if (isset($_GET['method']))
-		{
-			$method = $_GET['method'];
-
-			$content = $this->$method();
-
-			echo $content;
-		}
-		else
-		{
-			echo "<WSYGSMS__process>Method Not Set</WSYGSMS__process>";
-		}
 	}
 }
 
