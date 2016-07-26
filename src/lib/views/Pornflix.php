@@ -15,7 +15,7 @@ class Pornflix {
                 break;
             default:
                 new Header();
-                new Feed();
+                new HomeFeed();
                 break;
         }
     }

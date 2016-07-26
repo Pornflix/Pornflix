@@ -1,7 +1,7 @@
 <?php
 
 class Video {
-    public function Video() {
+    public function __construct() {
 		$id = $_GET['id'];
 
 		$data = (new WSVideos)->getVideoInfo($id);
@@ -15,7 +15,12 @@ class Video {
 		$content .= "\t\t\t\t\t<span class=\"video-title\">" . $data['name'] . "</span>\n";
         $content .= "\t\t\t\t</div>\n";
 
-		$content .= $this->drawTags($id);			
+		$content .= $this->drawTags($id);
+		$data = (new WSVideos)->getVideoNames("Recommended");
+
+		$content .= "\t\t\t\t<div class=\"recommended\">\n";
+		$content .= (new Feed)->drawFeed($data, "Recommended");
+		$content .= "\t\t\t\t</div>\n";
 
         $content .= "\t\t\t</div>\n";
         $content .= "\t\t</div>\n";
@@ -33,15 +38,17 @@ class Video {
 			for($j = 0; $j < sizeof($data[$i]['tag']); $j++) {
 				$name = strtolower(preg_replace("/s$/", "", $data[$i]['name'])) . ": " . $data[$i]['tag'][$j]['name'] . " ";
 				$className = "tags-item tags-item-" . strtolower($data[$i]['name']) . " " . (isset($data[$i]['tag'][$j]['extra']) ? "tags-item-extra-" . strtolower($data[$i]['tag'][$j]['extra']) : "");
+
 				$content .= "\t\t\t\t\t\t<a class=\"tags-link\">\n";
-				$content .= "\t\t\t\t\t\t\t<li class=\"$className\">$name";
+				$content .= "\t\t\t\t\t\t\t<li class=\"$className\">\n";
+				$content .= "\t\t\t\t\t\t\t\t" . $data[$i]['tag'][$j]['name'] . "\n";
+				$content .= "\t\t\t\t\t\t\t\t<span class=\"tags-count tags-count-" . strtolower($data[$i]['name']) . "\">" . $data[$i]['tag'][$j]['count'] . "</span>\n";
 				$content .= "\t\t\t\t\t\t\t</li>\n";
 				$content .= "\t\t\t\t\t\t</a>\n";
-				
 			}
 			$content .= "\t\t\t\t\t</ul>\n";
 		}
-
+		$content .= "\t\t\t\t</div>\n";
 		return $content;
 	}
 }
