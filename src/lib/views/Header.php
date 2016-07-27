@@ -1,10 +1,10 @@
 <?php
 
 class Header {
-    public function Header() {
+    public function __construct() {
         $content = "\t\t<div class=\"header\">\n";
         $content .= "\t\t\t<a href=\"/\" class=\"logo-link\">\n";
-        $content .= "\t\t\t\t<div class=\"header-logo\">Pornflix</div>\n";
+        $content .= "\t\t\t\t<div class=\"header-logo\">" . Constants::getSiteName() . "</div>\n";
         $content .= "\t\t\t</a>\n";
 
         $content .= "\t\t\t<ul class=\"menu\">\n";

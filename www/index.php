@@ -5,6 +5,6 @@ include('../src/lib/Include.php');
 
 $page = new Page();
 
-page::generate();
+$page->generate();
 
 ?>

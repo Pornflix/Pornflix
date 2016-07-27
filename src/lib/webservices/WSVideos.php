@@ -72,6 +72,7 @@ class WSVideos extends Query {
 	}
 
 	function getTags($id) {
+		$people = (Constants::getSFW() ? 'actor' : 'pornstar');	
 
 		$host = Constants::getMySQLDomain();
 		$user = Constants::getMySQLUser();
@@ -83,7 +84,7 @@ class WSVideos extends Query {
 				'tag' => []
 			],
 			1 => [
-				'name' => 'Pornstars',
+				'name' => ucfirst($people) . 's',
 				'tag' => []
 			],
 			2 => [
@@ -124,9 +125,9 @@ class WSVideos extends Query {
 		}
 		array_push($encode[2]['tag'], ['name' => 'Add tag', 'count' => '+']);
 
-		$sql = "SELECT `pornstars`.`id`, `pornstars`.`name`, `pornstars`.`gender`
-				FROM `pornstars`
-				LEFT JOIN `video_pornstars` ON `video_pornstars`.`pornstar` = `pornstars`.`id`
+		$sql = "SELECT `" . $people . "s`.`id`, `" . $people . "s`.`name`, `" . $people . "s`.`gender`
+				FROM `" . $people . "s`
+				LEFT JOIN `video_" . $people . "s` ON `video_" . $people . "s`.`$people` = `" . $people . "s`.`id`
 				WHERE `video` = $id;";
 		$result = $mysql->query($sql);
 
@@ -135,7 +136,7 @@ class WSVideos extends Query {
 			$encode[1]['tag'][$i]['name'] =  $row['name'];
 			$encode[1]['tag'][$i]['extra'] = $row['gender'];
 
-			$result1 = $mysql->query("SELECT COUNT(`id`) AS `count` FROM `video_pornstars` WHERE `pornstar`  = " . $row['id'] . " LIMIT 1;");
+			$result1 = $mysql->query("SELECT COUNT(`id`) AS `count` FROM `video_" . $people . "s` WHERE `$people`  = " . $row['id'] . " LIMIT 1;");
 			if($row1 = $result1->fetch_assoc()) {
 				$encode[1]['tag'][$i]['count'] = $row1['count'];
 			}

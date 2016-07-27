@@ -1,7 +1,7 @@
 <?php
 
 interface Configuration {
-	const SFW = false;
+	const SFW = true;
 	const TEST_SITE = true;
 
 	const SFW_SITE_NAME = "Netflix";

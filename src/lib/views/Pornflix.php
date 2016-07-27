@@ -1,7 +1,7 @@
 <?php
 
 class Pornflix {
-    public function Pornflix() {
+    public function __construct() {
         $view = !empty($_GET['view']) ? $_GET['view'] : "";
 
         switch($view) {
