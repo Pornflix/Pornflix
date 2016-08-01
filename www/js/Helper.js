@@ -56,14 +56,20 @@ Helper.safeTextNode = function(string, parent) {
 Helper.submitSearch = function() {
     var search = document.getElementsByClassName("search-form")[0];
     search.action += document.getElementsByClassName("search-bar")[0].value;
-}
+};
 
 Helper.setSearch = function(value) {
+	console.log(value);
     var searchBar = document.getElementsByClassName("search-bar")[0];
     searchBar.value += value || "";
-}
+};
 
 Helper.getSearch = function() {
     var searchBar = document.getElementsByClassName("search-bar")[0];
     return searchBar.value;
-}
+};
+
+Helper.addTag = function(id) {
+	var tag = prompt("Add tag:");
+	new XHR("?webservice=WSVideos&method=addTag=" + id + "&tag=" + tag);
+};

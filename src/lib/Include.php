@@ -12,5 +12,6 @@ include_once('views/Pornflix.php');
 include_once('views/Search.php');
 include_once('views/Video.php');
 include_once('webservices/WSVideos.php');
+include_once('webservices/WSSearch.php');
 
 ?>

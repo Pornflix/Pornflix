@@ -22,7 +22,7 @@ class Header {
         $content .= "\t\t\t</div>\n";
 
         $content .= "\t\t\t<div class=\"search\">\n";
-        $content .= "\t\t\t\t<form class=\"search-form\" method=\"post\" action=\"" . htmlspecialchars("?view=search&query=") . "\" onsubmit=\"Helper.SubmitSearch()\">\n";
+        $content .= "\t\t\t\t<form class=\"search-form\" method=\"post\" action=\"" . htmlspecialchars("?view=search&query=") . "\" onsubmit=\"Helper.submitSearch()\">\n";
         $content .= "\t\t\t\t\t<input class=\"search-bar\" placeholder=\"search\">\n";
         $content .= "\t\t\t\t\t<i class=\"fa fa-search search-icon\" aria-hidden=\"true\"></i>\n";
         $content .= "\t\t\t\t</form>\n";

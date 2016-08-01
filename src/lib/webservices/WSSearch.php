@@ -1,16 +1,12 @@
 <?php
 
-include_once('../WebService.php');
-
 /*
  * LITERALLY NO SANITIZATION OF QUERIES, DON'T MAKE THIS SHIT PUBLIC YOU ASSFACE
  * I ALSO MAY HAVE LEFT THE MAIN ARRAY NAME AS "MEME"
  */
 
-class WSSearch extends WebService {
-	function getResults() {
-		$query = isset($_GET['query']) ? $_GET['query'] : '';
-
+class WSSearch extends Query {
+	function getResults($query) {
 		$host = Constants::getMySQLDomain();
 		$user = Constants::getMySQLUser();
 		$pass = Constants::getMySQLPass();
@@ -67,8 +63,8 @@ class WSSearch extends WebService {
 		if(mysqli_num_rows($result) > 0) {
 			$i = 0;
 			while($row = $result->fetch_assoc()) {
-				$encode['videos'][$i]['id'] =  $row['id'];
-				$encode['videos'][$i]['name'] = $row['name'];
+				$encode['video'][$i]['id'] =  $row['id'];
+				$encode['video'][$i]['name'] = $row['name'];
 				$i++;
 			}
 			$encode['results'] = true;
@@ -77,7 +73,7 @@ class WSSearch extends WebService {
 		}
 
 		$mysql->close();
-		return json_encode($encode);
+		return $encode;
 	}
 
 	function process() {

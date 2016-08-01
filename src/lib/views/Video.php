@@ -38,8 +38,12 @@ class Video {
 			for($j = 0; $j < sizeof($data[$i]['tag']); $j++) {
 				$name = strtolower(preg_replace("/s$/", "", $data[$i]['name'])) . ": " . $data[$i]['tag'][$j]['name'] . " ";
 				$className = "tags-item tags-item-" . strtolower($data[$i]['name']) . " " . (isset($data[$i]['tag'][$j]['extra']) ? "tags-item-extra-" . strtolower($data[$i]['tag'][$j]['extra']) : "");
-
-				$content .= "\t\t\t\t\t\t<a class=\"tags-link\">\n";
+				
+				if($data[$i]['tag'][$j]['name'] == "Add tag") {
+					$content .= "\t\t\t\t\t\t<a class=\"tags-link\" onclick=\"Helper.addTag($id)\">\n";
+				} else {
+					$content .= "\t\t\t\t\t\t<a class=\"tags-link\" onclick=\"Helper.setSearch('$name')\">\n";
+				}
 				$content .= "\t\t\t\t\t\t\t<li class=\"$className\">\n";
 				$content .= "\t\t\t\t\t\t\t\t" . $data[$i]['tag'][$j]['name'] . "\n";
 				$content .= "\t\t\t\t\t\t\t\t<span class=\"tags-count tags-count-" . strtolower($data[$i]['name']) . "\">" . $data[$i]['tag'][$j]['count'] . "</span>\n";

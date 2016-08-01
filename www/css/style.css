@@ -168,46 +168,48 @@ a {
     width: 100%;
 }
 
-.feed .feed-list {
+.feed-list {
     margin: 0 auto;
     padding: 10px;
     color: #FFFFFF;
     font-weight: 300;
 }
 
-.feed .title {
+.title {
     margin: 0;
 	padding: 0 10px;
 	overflow: hidden;
 }
 
-.feed .feed-name {
+.feed-name {
     float: left;
 }
 
-.feed .more {
+.more {
     float: right;
 	vertical-align: middle;
 }
 
-.feed .more-chevron {
+.more-chevron {
 	padding-left: 5px;
 	vertical-align: middle;
 }
 
-.feed .feed-container {
+.feed-container {
 	margin: auto;
 	padding: 0;
+	overflow: auto;
 }
 
-.feed .feed-item {
+.feed-item {
     margin: 0;
     padding: 10px 10px;
     list-style-type: none;
 	display: inline-block;
+	float: left;
 }
 
-.feed .preview {
+.preview {
     margin: 0;
 	padding: 0;
 	float: left;
@@ -215,12 +217,12 @@ a {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.3)
 }
 
-.feed .preview:hover {
+.preview:hover {
 	background-color: #000000;
 	opacity: 0.75;
 }
 
-.feed .preview-title {
+.preview-title {
     margin: 3px 0 0 0;
     padding: 0;
     float: right;
@@ -245,67 +247,6 @@ a {
     width: 100%;
 }
 
-.search .row {
-    margin: 0 auto;
-    padding: 10px;
-    color: #FFFFFF;
-    font-weight: 300;
-}
-
-.search .title {
-    margin: 0;
-	padding: 0 10px;
-	overflow: hidden;
-}
-
-.search .genre {
-    float: left;
-}
-
-.search .more {
-    float: right;
-	vertical-align: middle;
-}
-
-.search .more-chevron {
-	padding-left: 5px;
-	vertical-align: middle;
-}
-
-.search .video-container {
-	margin: auto;
-	padding: 0;
-}
-
-.search .feed-item {
-    margin: 0;
-    padding: 10px 10px;
-    list-style-type: none;
-	display: inline-block;
-}
-
-.search .preview {
-    margin: 0;
-	padding: 0;
-	float: left;
-	object-fit: cover;
-	box-shadow: 0 1px 5px rgba(0,0,0,0.3)
-}
-
-.search .preview:hover {
-	background-color: #000000;
-	opacity: 0.75;
-}
-
-.search .preview-title {
-    margin: 3px 0 0 0;
-    padding: 0;
-    float: right;
-    clear: both;
-	color: #808080;
-	font-size: 13px;
-    font-weight: normal;
-}
 
 .video.container {
     margin-top: 60px;
@@ -425,70 +366,10 @@ a {
 }
 
 .video .recommended {
+	margin-left: -10px;
     clear: both;
 	float: left;
 	display: inline-block;
 	color: #FFFFFF;
 }
 
-.video .feed-list {
-    margin: 0 auto;
-	padding: 0;
-    color: #FFFFFF;
-    font-weight: 300;
-}
-
-.video .title {
-    margin: 0;
-	padding: 0 10px;
-	overflow: hidden;
-}
-
-.video .feed-name {
-    float: left;
-}
-
-.video .more {
-    float: right;
-	vertical-align: middle;
-}
-
-.video .more-chevron {
-	padding-left: 5px;
-	vertical-align: middle;
-}
-
-.video .feed-container {
-	margin: auto;
-	padding: 0;
-}
-
-.video .feed-item {
-    margin: 0;
-    padding: 10px 10px;
-    list-style-type: none;
-	display: inline-block;
-}
-
-.video .preview {
-    margin: 0;
-	padding: 0;
-	float: left;
-	object-fit: cover;
-	box-shadow: 0 1px 5px rgba(0,0,0,0.3)
-}
-
-.video .preview:hover {
-	background-color: #000000;
-	opacity: 0.75;
-}
-
-.video .preview-title {
-    margin: 3px 0 0 0;
-    padding: 0;
-    float: right;
-    clear: both;
-	color: #808080;
-	font-size: 13px;
-    font-weight: normal;
-}
