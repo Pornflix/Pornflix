@@ -1,24 +1,26 @@
 <?php
 
 class Pornflix {
-    public function __construct() {
-        $view = !empty($_GET['view']) ? $_GET['view'] : "";
-
-        switch($view) {
-            case "video":
-                new Header();
-                new Video();
-                break;
-            case "search":
-                new Header();
-                new Search();
-                break;
-            default:
-                new Header();
-                new HomeFeed();
-                break;
-        }
-    }
+	public function generate() {
+		$content = "";
+		$view = !empty($_GET['view']) ? $_GET['view'] : "";
+		
+		switch($view) {
+			case "video":
+				$content .= (new Header)->generate();
+				$content .= (new Video)->generate();
+				break;
+			case "search":
+				$content .= (new Header)->generate();
+				$content .= (new Search)->generate();
+				break;
+			default:
+				$content .= (new Header)->generate();
+				$content .= (new HomeFeed)->generate();
+		}
+		$content .= (new Footer)->generate();
+		return $content;
+	}
 }
 
 ?>

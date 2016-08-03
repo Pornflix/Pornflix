@@ -1,21 +1,29 @@
 <?php
 
 class Page {
-    function generate() {
-		if (isset($_GET['webservice']) || isset($_GET['jsonservice'])) {
-			$ws = new WebService();
+	function generate() {
+		$content = "";
+
+		if(isset($_GET['ws'])) {
+			$ws = new Query();
 			$ws->processWebService();
-            return;
+			return;
+		} else if(isset($_GET['splash'])) {
+			$splash = new Splash();
+
+			$content .= $splash->generate();
 		} else {
 			$constants = new Constants();
 
 			$dp = new DefaultPage;
 
-			$dp::generateHeader();
-			$dp::generateBody();
-			$dp::generateFooter();
+			$content .= $dp::generateHeader();
+			$content .= $dp::generateBody();
+			$content .= $dp::generateFooter();
 		}
-    }
+
+		echo $content;
+	}
 }
 
 ?>

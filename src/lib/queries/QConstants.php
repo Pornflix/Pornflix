@@ -2,7 +2,7 @@
 
 include_once('../WebService.php');
 
-class WSConstants extends WebService {
+class QConstants extends Query {
 	function getConstants() {
 		$encode = array(
 			'site' => Constants::getSiteName(),

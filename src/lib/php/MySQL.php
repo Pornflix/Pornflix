@@ -1,9 +1,9 @@
 <?php
 
 class MySQL {
-    public function MySQL() {
-        
-    }
+	public function MySQL() {
+		
+	}
 }
 
 ?>

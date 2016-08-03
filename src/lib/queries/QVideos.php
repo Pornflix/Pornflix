@@ -1,6 +1,6 @@
 <?php
 
-class WSVideos extends Query {
+class QVideos extends Query {
 	function getVideoNames($feedName) {
 
 		$host = Constants::getMySQLDomain();
@@ -69,6 +69,19 @@ class WSVideos extends Query {
 
 		$mysql->close();
 		return $encode;
+	}
+
+	function getRandomDescription() {
+		$url = "http://imdb.com/random/title/";
+
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_exec($ch);
+		$imdbID = explode("/", curl_getinfo($ch, CURLINFO_EFFECTIVE_URL))[4];
+
+		$movie = json_decode(file_get_contents("http://www.omdbapi.com/?i=$imdbID&plot=short&r=json"), true);
+		return $movie["Plot"];
 	}
 
 	function getTags($id) {
@@ -179,6 +192,15 @@ class WSVideos extends Query {
 
 		$mysql->close();
 		return json_encode($encode);
+	}
+
+	function process() {
+		if(isset($_GET['method'])) {
+			$method = $_GET['method'];
+			$content = $this->$method();
+			
+			echo json_encode($content);
+		}
 	}
 }
 

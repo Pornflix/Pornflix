@@ -1,35 +1,37 @@
 <?php
 
 class Video {
-    public function __construct() {
+	public function generate() {
 		$id = $_GET['id'];
 
-		$data = (new WSVideos)->getVideoInfo($id);
+		$data = (new QVideos)->getVideoInfo($id);
 
-        $content = "\t\t<div class=\"container video\">\n";
-        $content .= "\t\t\t<div class=\"video-container\">\n";
-        $content .= "\t\t\t\t<div class=\"video-info\">\n";
-        $content .= "\t\t\t\t\t<video class=\"html5-video video-js\" controls data-setup=\"{}\" style=\"width: 640px; height: 360px;\">\n";
+		$content = "\t\t<div class=\"container video\">\n";
+		$content .= "\t\t\t<div class=\"video-container\">\n";
+		$content .= "\t\t\t\t<div class=\"video-info\">\n";
+		$content .= "\t\t\t\t\t<video class=\"html5-video video-js\" controls data-setup=\"{}\" style=\"width: 640px; height: 360px;\">\n";
 		$content .= "\t\t\t\t\t\t<source src=\"../" . Constants::getDataDir() . "/" . $id ."/video.mp4\" type=\"video/mp4\">\n";
 		$content .= "\t\t\t\t\t</video>\n";
 		$content .= "\t\t\t\t\t<span class=\"video-title\">" . $data['name'] . "</span>\n";
-        $content .= "\t\t\t\t</div>\n";
+		$content .= "\t\t\t\t\t<span class=\"video-views\">" . $data['views'] . " views</span>\n";
+		$content .= "\t\t\t\t\t<span class=\"video-desc\">" . (!empty($data['description']) ? $data['description'] : "Loading...<script type=\"text/javascript\">Helper.getRandomDescription();</script>") . "</span>\n";
+		$content .= "\t\t\t\t</div>\n";
 
 		$content .= $this->drawTags($id);
-		$data = (new WSVideos)->getVideoNames("Recommended");
+		$data = (new QVideos)->getVideoNames("Recommended");
 
 		$content .= "\t\t\t\t<div class=\"recommended\">\n";
 		$content .= (new Feed)->drawFeed($data, "Recommended");
 		$content .= "\t\t\t\t</div>\n";
 
-        $content .= "\t\t\t</div>\n";
-        $content .= "\t\t</div>\n";
+		$content .= "\t\t\t</div>\n";
+		$content .= "\t\t</div>\n";
 
-		echo $content;
-    }
+		return $content;
+	}
 
 	function drawTags($id) {
-		$data = (new WSVideos)->getTags($id);		
+		$data = (new QVideos)->getTags($id);		
 
 		$content = "\t\t\t\t<div class=\"tags\">\n";
 		for($i = 0; $i < sizeof($data); $i++) {

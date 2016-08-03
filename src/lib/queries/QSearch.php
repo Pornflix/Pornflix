@@ -5,7 +5,7 @@
  * I ALSO MAY HAVE LEFT THE MAIN ARRAY NAME AS "MEME"
  */
 
-class WSSearch extends Query {
+class QSearch extends Query {
 	function getResults($query) {
 		$host = Constants::getMySQLDomain();
 		$user = Constants::getMySQLUser();
@@ -18,21 +18,21 @@ class WSSearch extends Query {
 			die ("Connection failed: " . $mysql->connect_error);
 		}
 
-        $pattern = "/.+?(?=(tag|pornstar|channel|end)+:)/";
-
-        preg_match_all($pattern, $query . " end:", $matches);
-
-        $categories = array();
-        $tags = array();
-        for($i = 0; $i < sizeof($matches[0]); $i++) {
-            $categories[$i] = explode(":", $matches[0][$i]);
-        }
-
-        $sql = "SELECT DISTINCT `videos`.`id`, `videos`.`name`\nFROM `videos`\n";
-
-        $sql .= "WHERE ";
-
-        for($i = 0; $i < sizeof($categories); $i++) {
+		$pattern = "/.+?(?=(tag|pornstar|channel|end)+:)/";
+		
+		preg_match_all($pattern, $query . " end:", $matches);
+		
+		$categories = array();
+		$tags = array();
+		for($i = 0; $i < sizeof($matches[0]); $i++) {
+			$categories[$i] = explode(":", $matches[0][$i]);
+		}
+		
+		$sql = "SELECT DISTINCT `videos`.`id`, `videos`.`name`\nFROM `videos`\n";
+		
+		$sql .= "WHERE ";
+		
+		for($i = 0; $i < sizeof($categories); $i++) {
 			if(sizeof($categories[$i]) == 1) {
 				$sql .= "`videos`.`name` LIKE '%" . preg_replace("/^\s\s*/", "", preg_replace("/\s\s*$/", "", $categories[$i][0])) . "%'\n";
 			} else {
@@ -53,10 +53,10 @@ class WSSearch extends Query {
 				}
 			}
 
-            if($i != sizeof($categories)-1) {
-                $sql .= "AND ";
-            }
-        }
+			if($i != sizeof($categories)-1) {
+				$sql .= "AND ";
+			}
+		}
 
 		$result = $mysql->query($sql);
 
@@ -77,17 +77,12 @@ class WSSearch extends Query {
 	}
 
 	function process() {
-		if (isset($_GET['method']))
-		{
+		if (isset($_GET['method']))	{
 			$method = $_GET['method'];
 
 			$content = $this->$method();
 
-			echo $content;
-		}
-		else
-		{
-			echo "<WSYGSMS__process>Method Not Set</WSYGSMS__process>";
+			echo json_encode($content);
 		}
 	}
 }

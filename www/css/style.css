@@ -1,12 +1,12 @@
 html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Roboto', 'Arial', sans-serif;
+	margin: 0;
+	padding: 0;
+	font-family: 'Roboto', 'Arial', sans-serif;
 }
 
 body {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 }
 
 a {
@@ -17,30 +17,30 @@ a {
 }
 
 #system {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
-    width: 100%;
+	margin: 0;
+	padding: 0;
+	display: inline-block;
+	width: 100%;
 }
 
 .header {
-    height: 60px;
-    width: 100%;
-    background-color: #e50914;
-    color: #FFFFFF;
-    line-height: 60px;
-    position: fixed;
-    z-index: 1;
+	height: 60px;
+	width: 100%;
+	background-color: #e50914;
+	color: #FFFFFF;
+	line-height: 60px;
+	position: fixed;
+	z-index: 1;
 }
 
 .header .header-logo {
-    margin: 0;
-    padding: 0;
-    float: left;
-    vertical-align: middle;
-    line-height: inherit;
-    font-size: 28px;
-    font-weight: bold;
+	margin: 0;
+	padding: 0;
+	float: left;
+	vertical-align: middle;
+	line-height: inherit;
+	font-size: 28px;
+	font-weight: bold;
 }
 
 .header .logo-link {
@@ -50,28 +50,28 @@ a {
 }
 
 .header .menu {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 	float: left;
 }
 
 .header .menu ul {
-    margin: 0;
-    padding: 0;
+	margin: 0;
+	padding: 0;
 	float: left;
 }
 
 .header .menu li {
-    margin: 0;
-    padding: 0 7px;
-    float: left;
-    list-style-type: none;
-    font-size: 18px;
-    font-weight: 300;
+	margin: 0;
+	padding: 0 7px;
+	float: left;
+	list-style-type: none;
+	font-size: 18px;
+	font-weight: 300;
 }
 
 .header .menu li:hover {
-    background-color: #A1151C;
+	background-color: #A1151C;
 }
 
 .header .menu-item-link {
@@ -79,73 +79,71 @@ a {
 }
 
 .header .search {
-    margin: 0 10px;
-    margin-top: 15px;
-    padding: 0;
-    overflow: hidden;
-    float: right;
-    text-align: center;
+	margin: 0 10px;
+	margin-top: 15px;
+	padding: 0;
+	overflow: hidden;
+	float: right;
+	text-align: center;
 }
 
 .header .search-form {
-    margin: 0;
-    height: 30px;
-    width:220px;
-    float: left;
+	margin: 0;
+	height: 30px;
+	float: left;
 }
 
 .header .search-bar {
-    margin: 0;
-    padding: 0 10px;
-    height: 30px;
-    width: 200px;
-    outline: none;
-    border: none;
-    font-size: 14px;
-    float: left;
+	margin: 0;
+	padding-left: 10px;
+	height: 30px;
+	width: 200px;
+	outline: none;
+	border: none;
+	font-size: 14px;
+	float: left;
 }
 
 .header .search-icon {
-	padding-right: 5px;
-    height: 30px;
-    width: 20px;
-    float: right;
-    line-height: 30px !important;
-    font-size: 16px;
-    color: #303030;
-    background-color: #FFFFFF;
-    font-size: 0;
-    display: inline-block;
+	padding-right: 10px;
+	height: 30px;
+	width: 20px;
+	float: right;
+	line-height: 30px !important;
+	font-size: 16px;
+	color: #303030;
+	background-color: #FFFFFF;
+	display: inline-block;
 }
 
 .header .profile {
-    margin: 0;
-    padding: 0 10px;
-    overflow: hidden;
-    float: right;
-    font-size: 16px;
+	margin: 0;
+	padding: 0 10px;
+	overflow: hidden;
+	float: right;
+	font-size: 16px;
 }
 
 .header .profile:hover {
-    background-color: #A1141C;
+	background-color: #A1141C;
 }
 
 .header .profile-picture {
-    margin: 0;
-    margin-top: 10px;
-    padding: 0;
-    height: 40px;
-    width: 40px;
-    background-image: url("../images/user.png");
-    background-size: 100%;
-    background-repeat: no-repeat;
-    float: left;
+	margin: 0;
+	margin-top: 10px;
+	padding: 0;
+	height: 40px;
+	width: 40px;
+	background-image: url("../images/user.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	float: left;
 }
 
 .header .profile-name {
-    margin: 0 0 0 10px;
-    padding: 0;
-    float: right;
+	margin: 0 0 0 10px;
+	padding: 0;
+	float: right;
 }
 
 .footer {
@@ -161,32 +159,32 @@ a {
 }
 
 .feed.container {
-    margin-top: 60px;
-    padding: 20px 0;
-    background-color: #2b2b2b;
-    display: inline-block;
-    width: 100%;
+	margin-top: 60px;
+	padding: 20px 0;
+	background-color: #2b2b2b;
+	display: inline-block;
+	width: 100%;
 }
 
 .feed-list {
-    margin: 0 auto;
-    padding: 10px;
-    color: #FFFFFF;
-    font-weight: 300;
+	margin: 0 auto;
+	padding: 10px;
+	color: #FFFFFF;
+	font-weight: 300;
 }
 
 .title {
-    margin: 0;
+	margin: 0;
 	padding: 0 10px;
 	overflow: hidden;
 }
 
 .feed-name {
-    float: left;
+	float: left;
 }
 
 .more {
-    float: right;
+	float: right;
 	vertical-align: middle;
 }
 
@@ -202,15 +200,15 @@ a {
 }
 
 .feed-item {
-    margin: 0;
-    padding: 10px 10px;
-    list-style-type: none;
+	margin: 0;
+	padding: 10px 10px;
+	list-style-type: none;
 	display: inline-block;
 	float: left;
 }
 
 .preview {
-    margin: 0;
+	margin: 0;
 	padding: 0;
 	float: left;
 	object-fit: cover;
@@ -223,50 +221,51 @@ a {
 }
 
 .preview-title {
-    margin: 3px 0 0 0;
-    padding: 0;
-    float: right;
-    clear: both;
+	margin: 3px 0 0 0;
+	padding: 0;
+	float: right;
+	clear: both;
 	color: #808080;
 	font-size: 13px;
-    font-weight: normal;
+	font-weight: normal;
 }
 
 .ellipsis {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: block;
 }
 
 .search.container {
-    margin-top: 60px;
-    padding: 20px 0;
-    background-color: #2b2b2b;
-    display: inline-block;
-    width: 100%;
+	margin-top: 60px;
+	padding: 20px 0;
+	background-color: #2b2b2b;
+	display: inline-block;
+	width: 100%;
 }
 
 
 .video.container {
-    margin-top: 60px;
+	margin-top: 60px;
 	padding: 20px 0;
-    width: 100%;
-    min-width: 960px;
+	width: 100%;
+	min-width: 960px;
 	background-color: #2b2b2b;
-    text-align: center;
-    display: inline-block;
+	text-align: center;
+	display: inline-block;
 }
 
 .video .video-container {
 	display: inline-block;
-    text-align: left;
-    width: 940px;
+	text-align: left;
+	width: 940px;
 }
 
 .video .video-info {
 	float: left;
 	display: inline-block;
+	width: 640px;
 }
 
 .video .video {
@@ -280,94 +279,115 @@ a {
 }
 
 .video .video-title {
-	margin: 0;
 	margin-top: 10px;
 	padding: 0;
 	font-size: 20px;
 	font-weight: 300;
 	color: #FFFFFF;
+	float: left;
+}
+
+.video .video-views {
+	margin-top: 10px;
+	padding: 0;
+	font-size: 20px;
+	font-weight: 300;
+	color: #FFFFFF;
+	float: right;
+}
+
+.video .video-desc {
+	margin-top: 10px;
+	padding: 0;
+	color: #FFFFFF;
+	clear: both;
+	display: inline-block;
+	width: 100%;
+	font-size: 16px;
+	font-weight: 300;
 }
 
 .video .tags {
-    margin: 0;
-    margin-left: 10px;
-    padding: 0;
-    float: left;
-    width: 220px;
+	margin: 0;
+	margin-left: 10px;
+	padding: 0;
+	float: left;
+	width: 220px;
 }
 
 .video .tags-name {
-    color: #FFFFFF;
-    float: left;
-    padding-left: 0px;
-    font-weight: 400;
-    clear: both;
+	color: #FFFFFF;
+	float: left;
+	padding-left: 0px;
+	font-weight: 400;
+	clear: both;
 }
 
 .video .tags-list {
-    margin: 0;
-    margin-left: 10px;
-    padding: 0;
-    width: 100%;
-    float: left;
-    clear: both;
+	margin: 0;
+	margin-left: 10px;
+	padding: 0;
+	width: 100%;
+	float: left;
+	clear: both;
 }
 
 .video .tags-item {
-    margin: 3px 0 3px 5px;
-    padding: 2px 5px;
-    list-style-type: none;
-    display: inline-block;
-    float: left;
-    /*clear:both;*/
-    font-weight: 400;
-    font-size: 15px;
+	margin: 3px 0 3px 5px;
+	padding: 2px 5px;
+	list-style-type: none;
+	display: inline-block;
+	float: left;
+	/*clear:both;*/
+	font-weight: 400;
+	font-size: 15px;
 }
 
 .video .tags-item-extra-male {
-    color: #FFFFFF;
-    background-color: #2196f3;
+	color: #FFFFFF;
+	background-color: #2196f3;
 }
 
 .video .tags-item-extra-female {
-    color: #FFFFFF;
-    background-color: #ec407a;
+	color: #FFFFFF;
+	background-color: #ec407a;
 }
 
 .video .tags-item-channel {
-    color: #FFFFFF;
-    background-color: #ab47bc;
+	color: #FFFFFF;
+	background-color: #ab47bc;
 }
 
 .video .tags-item-tags {
-    color: #FFFFFF;
-    background-color: #f44336;
+	color: #FFFFFF;
+	background-color: #f44336;
 }
 
 .video .tags-count {
-    margin-left: 2px;
-    color: #E0E0E0;
+	margin-left: 2px;
+	color: #E0E0E0;
 }
 
 .video .tags-item-extra-male .tags-count-pornstars {
-    color: #90caf9;
+	color: #90caf9;
 }
 
 .video .tags-item-extra-female .tags-count-pornstars {
-    color: #f48fb1;
+	color: #f48fb1;
 }
 
 .video .tags-count-channel {
-    color: #ce93d8;
+	color: #ce93d8;
 }
 
 .video .tags-count-tags {
-    color: #ef9a9a;
+	color: #ef9a9a;
 }
 
 .video .recommended {
-	margin-left: -10px;
-    clear: both;
+	margin-top: 30px;
+	margin-left: -20px;
+	clear: both;
 	float: left;
 	display: inline-block;
 	color: #FFFFFF;

@@ -1,10 +1,10 @@
 <?php
 
 class Search {
-	function __construct() {
+	function generate() {
 		$query = $_GET['query'];
 
-		$data = (new WSSearch)->getResults($query);
+		$data = (new QSearch)->getResults($query);
 		$content = "";
 
 		if($data['results']) {
@@ -19,7 +19,7 @@ class Search {
 
 		$content .= "\t\t\t</div>\n";
 
-		echo $content;
+		return $content;
 	}
 }
 

@@ -6,8 +6,8 @@ class Constants implements Configuration {
 	}
 
 	static function getTestSite() {
-        return self::TEST_SITE;
-    }
+		return self::TEST_SITE;
+	}
 
 	static function getSiteName() {
 		if(!self::getSFW()) {
