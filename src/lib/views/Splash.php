@@ -26,16 +26,17 @@ class Splash {
 	}
 
 	function splashBody() {
-		$content = "\t<div id=\"system\" style=\"background-image: url('../data/backgrounds/" . rand(1,39) . ".jpg');\">\n";
+		$file = rand(1, countDir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
+		$content = "\t<div id=\"system\" style=\"background-image: url('" . Constants::getDataDir() . "/backgrounds/$file');\">\n";
 		$content .= "\t\t<div id=\"container\">\n";
 		$content .= "\t\t\t<div id=\"header\">\n";
-		$content .= "\t\t\t\t<span id=\"logo\">Pornflix</span>\n";
+		$content .= "\t\t\t\t<span id=\"logo\">" . Constants::getSiteName() . "</span>\n";
 		$content .= "\t\t\t\t<span id=\"sign-in\">Sign In</span>\n";
 		$content .= "\t\t\t</div>\n";
 		$content .= "\t\t\t<div id=\"tagline\">\n";
 		$content .= "\t\t\t\t<span id=\"title\">Completely ad free.</span>\n";
 		$content .= "\t\t\t\t<span id=\"subtitle\">HD porn. $10 a month.</span>\n";
-		$content .= "\t\t\t\t<a href=\"#\">\n";
+		$content .= "\t\t\t\t<a href=\"/?view=home\">\n";
 		$content .= "\t\t\t\t\t<span id=\"button\">Try free for a month</span>\n";
 		$content .= "\t\t\t\t</a>\n";
 		$content .= "\t\t\t</div>\n";

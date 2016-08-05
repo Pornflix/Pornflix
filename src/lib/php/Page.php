@@ -8,11 +8,7 @@ class Page {
 			$ws = new Query();
 			$ws->processWebService();
 			return;
-		} else if(isset($_GET['splash'])) {
-			$splash = new Splash();
-
-			$content .= $splash->generate();
-		} else {
+		} else if(isset($_GET['view'])) {
 			$constants = new Constants();
 
 			$dp = new DefaultPage;
@@ -20,6 +16,10 @@ class Page {
 			$content .= $dp::generateHeader();
 			$content .= $dp::generateBody();
 			$content .= $dp::generateFooter();
+		} else {
+			$splash = new Splash();
+
+			$content .= $splash->generate();
 		}
 
 		echo $content;

@@ -26,7 +26,7 @@ class Feed {
 		for($i = 0; $i < sizeof($data['video']); $i++) {
 			$content .= "\t\t\t\t\t<li class=\"feed-item\">\n";
 			$content .= "\t\t\t\t\t\t<a class=\"preview-link\" href=\"" . htmlspecialchars("/?view=video&id=" . $data['video'][$i]['id']) . "\">\n";
-			$source = Constants::getDataDir() . "/" . $data['video'][$i]['id'] . "/preview.jpg";
+			$source = Constants::getDataDir() . "/videos/" . $data['video'][$i]['id'] . "/preview.jpg";
 			$content .= "\t\t\t\t\t\t\t<img class=\"preview\" src=\"$source\" style=\"width: 200px; height: " . round((9/16)*200) . "px;\">\n";
 			$content .= "\t\t\t\t\t\t</a>\n";
 			$content .= "\t\t\t\t\t\t<span class=\"preview-title ellipsis\" style=\"width: 200px;\">" . $data['video'][$i]['name'] . "</span>\n";

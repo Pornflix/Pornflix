@@ -10,7 +10,7 @@ class Video {
 		$content .= "\t\t\t<div class=\"video-container\">\n";
 		$content .= "\t\t\t\t<div class=\"video-info\">\n";
 		$content .= "\t\t\t\t\t<video class=\"html5-video video-js\" controls data-setup=\"{}\" style=\"width: 640px; height: 360px;\">\n";
-		$content .= "\t\t\t\t\t\t<source src=\"../" . Constants::getDataDir() . "/" . $id ."/video.mp4\" type=\"video/mp4\">\n";
+		$content .= "\t\t\t\t\t\t<source src=\"../" . Constants::getDataDir() . "/videos/" . $id ."/video.mp4\" type=\"video/mp4\">\n";
 		$content .= "\t\t\t\t\t</video>\n";
 		$content .= "\t\t\t\t\t<span class=\"video-title\">" . $data['name'] . "</span>\n";
 		$content .= "\t\t\t\t\t<span class=\"video-views\">" . $data['views'] . " views</span>\n";
