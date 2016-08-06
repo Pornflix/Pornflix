@@ -37,7 +37,7 @@ body {
 	font-size: 40px;
 }
 
-#sign-in {
+#sign-in-button {
 	margin: 20px;
 	padding: 8px 20px;
 	float: right;
@@ -83,4 +83,57 @@ body {
 	color: #FFFFFF;
 	clear: both;
 	float: left;
+}
+
+#sign-in-container {
+	margin: auto;
+	margin-top: 100px;
+	padding: 40px;
+	width: 400px;
+	height: 260px;
+	background-color: #FFFFFF;
+}
+
+#sign-in-title {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	display: inline-block;
+	font-weight: 300;
+	font-size: 30px;
+}
+
+#sign-in-form {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+}
+
+#sign-in-subtitle {
+	margin-top: 10px;
+	padding: 0;
+	font-weight: 300;
+	font-size: 18px;
+	width: 100%;
+	display: inline-block;
+}
+
+#sign-in-input {
+	margin: 5px auto;
+	padding: 7px 7px;
+	box-sizing: border-box;
+	font-size: 16px;
+	width: 100%;
+}
+
+#sign-in-submit {
+	margin: 30px auto;
+	padding: 7px 5px;
+	color: #FFFFFF;
+	font-size: 16px;
+	font-weight: 300;
+	display: block;
+	width: 70%;
+	background-color: #e50914;
+	border: 0;
 }

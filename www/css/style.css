@@ -116,6 +116,23 @@ a {
 	display: inline-block;
 }
 
+.header .logoff {
+	margin: 0;
+	padding: 0 10px;
+	border: 0;
+	background-color: inherit;
+	color: #FFFFFF;
+	float: right;
+	font-size: 16px;
+	height: 60px;
+}
+
+.header .logoff:hover {
+	background-color: #A1141C;
+	cursor: pointer;
+	border: 0;
+}
+
 .header .profile {
 	margin: 0;
 	padding: 0 10px;
@@ -144,6 +161,7 @@ a {
 	margin: 0 0 0 10px;
 	padding: 0;
 	float: right;
+	line-height: 60px;
 }
 
 .footer {

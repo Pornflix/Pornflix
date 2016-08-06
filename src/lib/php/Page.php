@@ -3,19 +3,49 @@
 class Page {
 	function generate() {
 		$content = "";
+		$method = $_SERVER['REQUEST_METHOD'];
 
-		if(isset($_GET['ws'])) {
-			$ws = new Query();
-			$ws->processWebService();
-			return;
-		} else if(isset($_GET['view'])) {
-			$constants = new Constants();
+		session_start();
 
-			$dp = new DefaultPage;
+		$constants = new Constants();
+		$session = new Session();
+		
+		if($method == 'POST') {
+			if(isset($_POST['command'])) {
+				switch($_POST['command']) {
+					case "logon":
+						$session->logon($_POST['user'], $_POST['pass']);
+						break;
+					case "logoff":
+						$session->logoff();
+				}
+			}
 
-			$content .= $dp::generateHeader();
-			$content .= $dp::generateBody();
-			$content .= $dp::generateFooter();
+			header("Location: " . $_SERVER['REQUEST_URI']);
+			die;
+		}
+
+		if($session->authenticate()) {
+			if($method == 'GET') {
+				switch($_GET) {
+					case "ws":
+						$ws = new Query();
+						$ws->processWebService();
+						return;
+					case "view":
+						$dp = new DefaultPage;
+
+						$content .= $dp::generateHeader();
+						$content .= $dp::generateBody();
+						$content .= $dp::generateFooter();
+					default: 
+						$dp = new DefaultPage;
+
+						$content .= $dp::generateHeader();
+						$content .= $dp::generateBody();
+						$content .= $dp::generateFooter();
+				}
+			}
 		} else {
 			$splash = new Splash();
 

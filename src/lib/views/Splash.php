@@ -2,9 +2,15 @@
 
 class Splash {	
 	public function generate() {
-		$content = $this->splashHeader();
-		$content .= $this->splashBody();
-		$content .= $this->splashFooter();
+		if(!isset($_GET['meme'])) {
+			$content = $this->splashHeader();
+			$content .= $this->splashBody();
+			$content .= $this->splashFooter();
+		} else {
+			$content = $this->splashHeader();
+			$content .= $this->splashLogin();
+			$content .= $this->splashFooter();
+		}
 
 		return $content;
 	}
@@ -26,19 +32,43 @@ class Splash {
 	}
 
 	function splashBody() {
-		$file = rand(1, countDir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
+		$file = rand(1, countdir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
 		$content = "\t<div id=\"system\" style=\"background-image: url('" . Constants::getDataDir() . "/backgrounds/$file');\">\n";
 		$content .= "\t\t<div id=\"container\">\n";
 		$content .= "\t\t\t<div id=\"header\">\n";
-		$content .= "\t\t\t\t<span id=\"logo\">" . Constants::getSiteName() . "</span>\n";
-		$content .= "\t\t\t\t<span id=\"sign-in\">Sign In</span>\n";
+		$content .= "\t\t\t\t<a href=\"/\"><span id=\"logo\">" . Constants::getSiteName() . "</span></a>\n";
+		$content .= "\t\t\t\t<a href=\"/?meme\"><span id=\"sign-in-button\">Sign In</span></a>\n";
 		$content .= "\t\t\t</div>\n";
 		$content .= "\t\t\t<div id=\"tagline\">\n";
 		$content .= "\t\t\t\t<span id=\"title\">Completely ad free.</span>\n";
 		$content .= "\t\t\t\t<span id=\"subtitle\">HD porn. $10 a month.</span>\n";
-		$content .= "\t\t\t\t<a href=\"/?view=home\">\n";
-		$content .= "\t\t\t\t\t<span id=\"button\">Try free for a month</span>\n";
+		$content .= "\t\t\t\t<a href=\"/\">\n";
+		$content .= "\t\t\t\t\t<span id=\"button\">try free for a month</span>\n";
 		$content .= "\t\t\t\t</a>\n";
+		$content .= "\t\t\t</div>\n";
+		$content .= "\t\t</div>\n";
+		$content .= "\t</div>\n";
+
+		return $content;
+	}
+
+	function splashLogin() {
+		$file = rand(1, countDir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
+		$content = "\t<div id=\"system\" style=\"background-image: url('" . Constants::getDataDir() . "/backgrounds/$file');\">\n";
+		$content .= "\t\t<div id=\"container\">\n";
+		$content .= "\t\t\t<div id=\"header\">\n";
+		$content .= "\t\t\t\t<a href=\"/\"><span id=\"logo\">" . Constants::getSiteName() . "</span></a>\n";
+		$content .= "\t\t\t</div>\n";
+		$content .= "\t\t\t<div id=\"sign-in-container\">\n";
+		$content .= "\t\t\t\t<form id=\"sign-in-form\" method=\"post\" name=\"logon\" action=\"/\">\n";
+		$content .= "\t\t\t\t\t<span id=\"sign-in-title\">Sign In</span>\n";
+		$content .= "\t\t\t\t\t<span id=\"sign-in-subtitle\">Username</span>\n";
+		$content .= "\t\t\t\t\t<input type=\"hidden\" name=\"command\" value=\"logon\">\n";
+		$content .= "\t\t\t\t\t<input id=\"sign-in-input\" type=\"text\" name=\"user\" required autofocus>\n";
+		$content .= "\t\t\t\t\t<span id=\"sign-in-subtitle\">Password</span>\n";
+		$content .= "\t\t\t\t\t<input id=\"sign-in-input\" type=\"password\" name=\"pass\" required>\n";
+		$content .= "\t\t\t\t\t<button id=\"sign-in-submit\" type=\"submit\">Sign In</button>\n";
+		$content .= "\t\t\t\t</form>\n";
 		$content .= "\t\t\t</div>\n";
 		$content .= "\t\t</div>\n";
 		$content .= "\t</div>\n";
