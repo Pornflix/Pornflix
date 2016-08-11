@@ -71,11 +71,12 @@ Helper.getSearch = function() {
 
 Helper.addTag = function(id) {
 	var tag = prompt("Add tag:");
-	new XHR("?ws=QVideos&method=addTag=" + id + "&tag=" + tag);
+	new XHR("?ws=QVideos&method=addTag&id=" + id + "&tag=" + tag);
 };
 
 Helper.getRandomDescription = function() {
-	new XHR("?ws=QVideos&method=getRandomDescription", Helper.setRandomDescription);
+	new XHR("?ws=QVideos&method=getRandomDescription",
+	Helper.setRandomDescription);
 };
 
 Helper.setRandomDescription = function(data) {

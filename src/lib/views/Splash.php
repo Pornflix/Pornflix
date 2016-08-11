@@ -41,7 +41,7 @@ class Splash {
 		$content .= "\t\t\t</div>\n";
 		$content .= "\t\t\t<div id=\"tagline\">\n";
 		$content .= "\t\t\t\t<span id=\"title\">Completely ad free.</span>\n";
-		$content .= "\t\t\t\t<span id=\"subtitle\">HD porn. $10 a month.</span>\n";
+		$content .= "\t\t\t\t<span id=\"subtitle\">HD " . (Constants::getSFW() ? "videos" : "porn") . ". $10 a month.</span>\n";
 		$content .= "\t\t\t\t<a href=\"/\">\n";
 		$content .= "\t\t\t\t\t<span id=\"button\">try free for a month</span>\n";
 		$content .= "\t\t\t\t</a>\n";

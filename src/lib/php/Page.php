@@ -7,9 +7,10 @@ class Page {
 
 		session_start();
 
+		$mysql = (new MySQL())->conn;
 		$constants = new Constants();
-		$session = new Session();
-		
+		$session = new Session($mysql);
+
 		if($method == 'POST') {
 			if(isset($_POST['command'])) {
 				switch($_POST['command']) {
@@ -22,28 +23,29 @@ class Page {
 			}
 
 			header("Location: " . $_SERVER['REQUEST_URI']);
-			die;
+			exit();
 		}
 
 		if($session->authenticate()) {
 			if($method == 'GET') {
-				switch($_GET) {
-					case "ws":
-						$ws = new Query();
-						$ws->processWebService();
-						return;
-					case "view":
-						$dp = new DefaultPage;
+				if(isset($_GET['ws'])) {
+					$ws = new Query($mysql);
+					$ws->processWebService();
+					return;
+				}
 
-						$content .= $dp::generateHeader();
-						$content .= $dp::generateBody();
-						$content .= $dp::generateFooter();
-					default: 
-						$dp = new DefaultPage;
+				if(isset($_GET['view'])) {
+					$dp = new DefaultPage($mysql);
 
-						$content .= $dp::generateHeader();
-						$content .= $dp::generateBody();
-						$content .= $dp::generateFooter();
+					$content .= $dp->generateHeader();
+					$content .= $dp->generateBody();
+					$content .= $dp->generateFooter();
+				} else {
+					$dp = new DefaultPage($mysql);
+
+					$content .= $dp->generateHeader();
+					$content .= $dp->generateBody();
+					$content .= $dp->generateFooter();
 				}
 			}
 		} else {

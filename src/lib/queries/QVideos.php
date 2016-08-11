@@ -1,29 +1,28 @@
 <?php
 
 class QVideos extends Query {
-	function getVideoNames($feedName) {
+	private $mysql;
 
-		$host = Constants::getMySQLDomain();
-		$user = Constants::getMySQLUser();
-		$pass = Constants::getMySQLPass();
-		$db = Constants::getDBName();
+	function __construct($mysql) {
+		$this->mysql = $mysql;
+	}
+
+	function getVideoNames($feedName) {
 		$encode = array('video' => []);
 
-		$mysql = new mysqli($host, $user, $pass, $db);
-		if ($mysql->connect_error) {
-			die ("Connection failed: " . $mysql->connect_error);
-		}
-		$sql = "SELECT `videos`.`id`, `videos`.`name`
-				FROM `videos`\n";
+		$sql = "SELECT videos.id, videos.name\n" .
+				"FROM videos\n";
 
 		switch($feedName) {
 			case "Newest":
-				$sql .= "ORDER BY `videos`.`date` DESC";
+				$sql .= "ORDER BY videos.date DESC\n";
 				break;
 			case "Anal":
-				$sql .= "LEFT JOIN `video_tags` ON `video_tags`.`video` = `videos`.`id`
-						 LEFT JOIN `tags` ON `tags`.`id` = `video_tags`.`tag`
-						 WHERE `tags`.`name` = 'anal'";
+				$sql .= "LEFT JOIN video_tags " .
+						"ON video_tags.video = videos.id\n" .
+						"LEFT JOIN tags " .
+						"ON tags.id = video_tags.tag\n" .
+						"WHERE tags.name = 'anal'";
 				break;
 			case "All":
 				break;
@@ -33,41 +32,35 @@ class QVideos extends Query {
 
 		$sql .= "\nLIMIT 8";
 
-		$result = $mysql->query($sql);
+		$result = $this->mysql->prepare($sql);
+		$result->execute();
 
 		$i = 0;
-		while($row = $result->fetch_assoc()) {
+		while($row = $result->fetch()) {
 			$encode['video'][$i]['id'] =  $row['id'];
 			$encode['video'][$i]['name'] = $row['name'];
 			$i++;
 		}
-
-		$mysql->close();
 		return $encode;
 	}
 
 	function getVideoInfo($id) {
-		$host = Constants::getMySQLDomain();
-		$user = Constants::getMySQLUser();
-		$pass = Constants::getMySQLPass();
-		$db = Constants::getDBName();
 		$encode = array();
 
-		$mysql = new mysqli($host, $user, $pass, $db);
-		if ($mysql->connect_error) {
-			die ("Connection failed: " . $mysql->connect_error);
-		}
-		$sql = "SELECT `id`,`name`,`description`,`views` FROM videos WHERE `id` = $id LIMIT 1;";
-		$result = $mysql->query($sql);
+		$sql =  "SELECT id, name, description, views\n" .
+				"FROM videos\n" .
+				"WHERE id = :id\n" .
+				"LIMIT 1";
 
-		if($row = $result->fetch_assoc()) {
+		$result = $this->mysql->prepare($sql);
+		$result->execute(array('id' => $id));
+
+		if($row = $result->fetch()) {
 			$encode['id'] =  $row['id'];
 			$encode['name'] = $row['name'];
 			$encode['description'] = $row['description'];
 			$encode['views'] = $row['views'];
 		}
-
-		$mysql->close();
 		return $encode;
 	}
 
@@ -78,19 +71,18 @@ class QVideos extends Query {
 		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_exec($ch);
-		$imdbID = explode("/", curl_getinfo($ch, CURLINFO_EFFECTIVE_URL))[4];
 
-		$movie = json_decode(file_get_contents("http://www.omdbapi.com/?i=$imdbID&plot=short&r=json"), true);
+		$imdbID = explode("/", curl_getinfo($ch, CURLINFO_EFFECTIVE_URL))[4];
+		$url = "http://www.omdbapi.com/?i=$imdbID&plot=short&r=json";
+
+		$movie = json_decode(file_get_contents($url), true);
+
 		return $movie["Plot"];
 	}
 
 	function getTags($id) {
 		$people = (Constants::getSFW() ? 'actor' : 'pornstar');	
 
-		$host = Constants::getMySQLDomain();
-		$user = Constants::getMySQLUser();
-		$pass = Constants::getMySQLPass();
-		$db = Constants::getDBName();
 		$encode = array(
 			0 => [
 				'name' => 'Channel',
@@ -106,97 +98,127 @@ class QVideos extends Query {
 			]
 		);
 
-		$mysql = new mysqli($host, $user, $pass, $db);
-		if ($mysql->connect_error) {
-			die ("Connection failed: " . $mysql->connect_error);
-		}
+		$sql = "SELECT channels.id, channels.name\n" .
+				"FROM channels\n" .
+				"LEFT JOIN video_channels " .
+				"ON video_channels.channel = channels.id\n" .
+				"WHERE video = :id;";
 
-		$sql = "SELECT `channels`.`id`, `channels`.`name`
-				FROM `channels`
-				LEFT JOIN `video_channels` ON `video_channels`.`channel` = `channels`.`id`
-				WHERE `video` = $id;";
-		$result = $mysql->query($sql);
+		$result = $this->mysql->prepare($sql);
+		$result->execute(array('id' => $id));
 
-		while($row = $result->fetch_assoc()) {
-			$result1 = $mysql->query("SELECT COUNT(`id`) AS `count` FROM `video_channels` WHERE `channel` = " . $row['id'] . " LIMIT 1;");
-			if($row1 = $result1->fetch_assoc()) {
-				array_push($encode[0]['tag'], ['name' => $row['name'], 'count' => $row1['count']]);
+		while($row = $result->fetch()) {
+			$sql =  "SELECT COUNT(id) AS count\n" .
+					"FROM video_channels\n" .
+					"WHERE channel = :channel\n" .
+					"LIMIT 1";
+
+			$result1 = $this->mysql->prepare($sql);
+			$result1->execute(array('channel' => $row['id']));
+
+			if($row1 = $result1->fetch()) {
+				array_push($encode[0]['tag'], [
+					'name' => $row['name'],
+					'count' => $row1['count']
+				]);
 			}
 		}
 
-		$sql = "SELECT `tags`.`id`, `tags`.`name`, `tags`.`type`
-				FROM `tags`
-				LEFT JOIN `video_tags` ON `video_tags`.`tag` = `tags`.`id`
-				WHERE `video` = $id;";
-		$result = $mysql->query($sql);
+		$sql =  "SELECT tags.id, tags.name, tags.type\n" .
+				"FROM tags\n" .
+				"LEFT JOIN video_tags ON video_tags.tag = tags.id\n" .
+				"WHERE video = :id";
 
-		while($row = $result->fetch_assoc()) {
-			$result1 = $mysql->query("SELECT COUNT(`id`) AS `count` FROM `video_tags` WHERE `tag` = " . $row['id'] . " LIMIT 1;");
-			if($row1 = $result1->fetch_assoc()) {
-				array_push($encode[2]['tag'], ['name' => $row['name'], 'count' => $row1['count']]);
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['id' => $id]);
+
+		while($row = $result->fetch()) {
+			$sql =  "SELECT COUNT(id) AS num\n" .
+					"FROM video_tags\n" .
+					"WHERE tag = :tag\n" .
+					"LIMIT 1";
+
+			$result1 = $this->mysql->prepare($sql);
+			$result1->execute(['tag' => $row['id']]);
+
+			if($row1 = $result1->fetch()) {
+				array_push($encode[2]['tag'], [
+					'name' => $row['name'],
+					'count' => $row1['num']
+				]);
 			}
 		}
 		array_push($encode[2]['tag'], ['name' => 'Add tag', 'count' => '+']);
 
-		$sql = "SELECT `" . $people . "s`.`id`, `" . $people . "s`.`name`, `" . $people . "s`.`gender`
-				FROM `" . $people . "s`
-				LEFT JOIN `video_" . $people . "s` ON `video_" . $people . "s`.`$people` = `" . $people . "s`.`id`
-				WHERE `video` = $id;";
-		$result = $mysql->query($sql);
+		$peoples = $people . "s";
+
+		$sql = "SELECT $peoples.id, $peoples.name, $peoples.gender\n" .
+				"FROM $peoples\n" .
+				"LEFT JOIN video_$peoples " .
+				"ON video_$peoples.$people = $peoples.id\n" .
+				"WHERE video = :id";
+
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['id' => $id]);
 
 		$i = 0;
-		while($row = $result->fetch_assoc()) {
+		while($row = $result->fetch()) {
 			$encode[1]['tag'][$i]['name'] =  $row['name'];
 			$encode[1]['tag'][$i]['extra'] = $row['gender'];
 
-			$result1 = $mysql->query("SELECT COUNT(`id`) AS `count` FROM `video_" . $people . "s` WHERE `$people`  = " . $row['id'] . " LIMIT 1;");
-			if($row1 = $result1->fetch_assoc()) {
+			$sql =  "SELECT COUNT(id) AS count\n" .
+					"FROM video_$peoples\n" .
+					"WHERE $people = :people\n" .
+					"LIMIT 1";
+
+			$result1 = $this->mysql->prepare($sql);
+			$result1->execute(['people' => $row['id']]);
+
+			if($row1 = $result1->fetch()) {
 				$encode[1]['tag'][$i]['count'] = $row1['count'];
 			}
 			$i++;
 		}
-		$mysql->close();
 		return $encode;
 	}
 
-	function addTag() {
-		$id = $_GET['id'];
-		$tag = $_GET['tag'];
+	function addTag($id = null, $tag = null) {
+		$id = (isset($id) ? $id : $_GET['id']);
+		$tag = (isset($tag) ? $tag : $_GET['tag']);
 
-		$host = Constants::getMySQLDomain();
-		$user = Constants::getMySQLUser();
-		$pass = Constants::getMySQLPass();
-		$db = Constants::getDBName();
+		$encode = ['success' => 'false'];
 
-		$mysql = new mysqli($host, $user, $pass, $db);
-		if ($mysql->connect_error) {
-			die ("Connection failed: " . $mysql->connect_error);
-		}
+		$sql = "SELECT id\n" .
+				"FROM tags\n" .
+				"WHERE name = :tag\n" .
+				"LIMIT 1";
 
-		$sql = "SELECT `id`
-				FROM `tags`
-				WHERE `name` = '$tag'
-				LIMIT 1";
-		$result = $mysql->query($sql);
-		if($row = $result->fetch_assoc()) {
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['tag' => $tag]);
+
+		if($row = $result->fetch()) {
 			$tag_id = $row['id'];
 		}
 
-		$sql = "INSERT INTO video_tags(video, tag, date) VALUES('$id', '$tag_id', CURRENT_TIMESTAMP);";
+		$sql =  "INSERT INTO video_tags(video, tag, date)\n" .
+				"VALUES(:video, :tag, CURRENT_TIMESTAMP)";
 
-		if($mysql->query($sql) === TRUE && isset($id) && isset($tag)) {
-			$encode = array('success' => 'true');
-		} else {
-			$encode = array('success' => 'failed');
+		$result = $this->mysql->prepare($sql);
+
+		if(isset($id) && isset($tag_id)) {
+			if($result->execute(['video' => $id, 'tag' => $tag_id])) {
+				$encode = ['success' => 'true'];
+			} else {
+				$encode = ['success' => 'false'];
+			}
 		}
-
-		$mysql->close();
-		return json_encode($encode);
+		return $encode;
 	}
 
 	function process() {
 		if(isset($_GET['method'])) {
 			$method = $_GET['method'];
+
 			$content = $this->$method();
 			
 			echo json_encode($content);

@@ -6,6 +6,7 @@ include_once('php/DefaultPage.php');
 include_once('php/Query.php');
 include_once('php/Helper.php');
 include_once('php/Session.php');
+include_once('php/MySQL.php');
 include_once('views/Feed.php');
 include_once('views/HomeFeed.php');
 include_once('views/Footer.php');

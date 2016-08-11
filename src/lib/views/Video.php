@@ -1,10 +1,16 @@
 <?php
 
 class Video {
+	private $mysql;
+
+	function __construct($mysql) {
+		$this->mysql = $mysql;
+	}
+
 	public function generate() {
 		$id = $_GET['id'];
 
-		$data = (new QVideos)->getVideoInfo($id);
+		$data = (new QVideos($this->mysql))->getVideoInfo($id);
 
 		$content = "\t\t<div class=\"container video\">\n";
 		$content .= "\t\t\t<div class=\"video-container\">\n";
@@ -18,7 +24,7 @@ class Video {
 		$content .= "\t\t\t\t</div>\n";
 
 		$content .= $this->drawTags($id);
-		$data = (new QVideos)->getVideoNames("Recommended");
+		$data = (new QVideos($this->mysql))->getVideoNames("Recommended");
 
 		$content .= "\t\t\t\t<div class=\"recommended\">\n";
 		$content .= (new Feed)->drawFeed($data, "Recommended");
@@ -31,7 +37,7 @@ class Video {
 	}
 
 	function drawTags($id) {
-		$data = (new QVideos)->getTags($id);		
+		$data = (new QVideos($this->mysql))->getTags($id);		
 
 		$content = "\t\t\t\t<div class=\"tags\">\n";
 		for($i = 0; $i < sizeof($data); $i++) {

@@ -1,7 +1,13 @@
 <?php
 
 class DefaultPage {
-	static function generateHeader() {
+	private $mysql;
+
+	function __construct($mysql) {
+		$this->mysql = $mysql;
+	}
+
+	public function generateHeader() {
 		$title = "Home";
 		$site = Constants::getSiteName();
 		
@@ -25,15 +31,15 @@ class DefaultPage {
 		return $content;
 	}
 
-	static function generateBody() {
+	public function generateBody() {
 		$content =  "\t<div id=\"system\">\n";
-		$content .= (new Pornflix)->generate();
+		$content .= (new Pornflix($this->mysql))->generate();
 		$content .= "\t</div>\n";
 
 		return $content;
 	}
 
-	static function generateFooter() {
+	public function generateFooter() {
 		$content = "</body>\n\n";
 		$content .= "</html>\n";
 

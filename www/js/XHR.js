@@ -38,7 +38,8 @@ XHR.prototype.send = function() {
 
 	if (this.method == "POST")
 	{
-		this.xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		this.xmlhttp.setRequestHeader("Content-Type",
+		"application/x-www-form-urlencoded");
 		this.xmlhttp.send();
 	}
 	else
@@ -78,7 +79,8 @@ XHR.prototype.checkResponseForTimeout = function(result)
 			if (json.error == "invalidsession")
 			{
 			
-				console.log ("checkResponseForTimeout(): ERROR: " + xmlhttp.response);
+				console.log ("checkResponseForTimeout(): ERROR: " +
+				xmlhttp.response);
 			
 				window.location.href=window.location.href;
 			

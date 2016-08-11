@@ -1,10 +1,16 @@
 <?php
 
 class Search {
+	private $mysql;
+
+	function __construct($mysql) {
+		$this->mysql = $mysql;
+	}
+
 	function generate() {
 		$query = $_GET['query'];
 
-		$data = (new QSearch)->getResults($query);
+		$data = (new QSearch($this->mysql))->getResults($query);
 		$content = "";
 
 		if($data['results']) {
