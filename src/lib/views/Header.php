@@ -22,7 +22,7 @@ class Header {
 		$content .= "\t\t\t\t<input type=\"hidden\" name=\"command\" value=\"logoff\">\n";
 		$content .= "\t\t\t\t<button class=\"logoff\" type=\"submit\">\n";
 		$content .= "\t\t\t\t\t<span class=\"profile-picture\"></span>\n";
-		$content .= "\t\t\t\t\t<span class=\"profile-name\">Jeff Dunham</span>\n";
+		$content .= "\t\t\t\t\t<span class=\"profile-name\">" . $_SESSION['username'] . "</span>\n";
 		$content .= "\t\t\t\t</button>\n";
 		$content .= "\t\t\t</form>\n";
 		
