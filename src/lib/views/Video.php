@@ -11,11 +11,12 @@ class Video {
 		$id = $_GET['id'];
 
 		$data = (new QVideos($this->mysql))->getVideoInfo($id);
+		(new QVideos($this->mysql))->incrementViews($id);
 
 		$content = "\t\t<div class=\"container video\">\n";
 		$content .= "\t\t\t<div class=\"video-container\">\n";
 		$content .= "\t\t\t\t<div class=\"video-info\">\n";
-		$content .= "\t\t\t\t\t<video class=\"html5-video video-js\" controls data-setup=\"{}\" style=\"width: 640px; height: 360px;\">\n";
+		$content .= "\t\t\t\t\t<video class=\"html5-video vjs-default-skin vjs-big-play-centered video-js\" controls autoplay preload=\"auto\" data-setup=\"{}\" width=\"640\" height=\"360\">\n";
 		$content .= "\t\t\t\t\t\t<source src=\"../" . Constants::getDataDir() . "/videos/" . $id ."/video.mp4\" type=\"video/mp4\">\n";
 		$content .= "\t\t\t\t\t</video>\n";
 		$content .= "\t\t\t\t\t<span class=\"video-title\">" . $data['name'] . "</span>\n";

@@ -21,6 +21,7 @@ class DefaultPage {
 		$content .= "\t<script language=\"javascript\" src=\"../js/XHR.js\"></script>\n";
 		$content .= "\t<script src=\"http://vjs.zencdn.net/5.10.4/video.js\"></script>\n";
 		$content .= "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/style.css\">\n";
+		$content .= "\t<link rel=\"stylesheet\" type=\"text/css\" href=\"../css/videojs.css\">\n";
 		$content .= "\t<link rel=\"shortcut icon\" href=\"../images/pornflix.ico\">\n";
 		$content .= "\t<script src=\"https://use.fontawesome.com/bc31adac8a.js\"></script>\n";
 		$content .= "\t<link href=\"http://vjs.zencdn.net/5.10.4/video-js.css\" rel=\"stylesheet\">\n";

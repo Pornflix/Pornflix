@@ -2,7 +2,7 @@
 
 class Splash {	
 	public function generate() {
-		if(!isset($_GET['meme'])) {
+		if(!isset($_GET['sign-in'])) {
 			$content = $this->splashHeader();
 			$content .= $this->splashBody();
 			$content .= $this->splashFooter();
@@ -37,7 +37,7 @@ class Splash {
 		$content .= "\t\t<div id=\"container\">\n";
 		$content .= "\t\t\t<div id=\"header\">\n";
 		$content .= "\t\t\t\t<a href=\"/\"><span id=\"logo\">" . Constants::getSiteName() . "</span></a>\n";
-		$content .= "\t\t\t\t<a href=\"/?meme\"><span id=\"sign-in-button\">Sign In</span></a>\n";
+		$content .= "\t\t\t\t<a href=\"/?sign-in\"><span id=\"sign-in-button\">Sign In</span></a>\n";
 		$content .= "\t\t\t</div>\n";
 		$content .= "\t\t\t<div id=\"tagline\">\n";
 		$content .= "\t\t\t\t<span id=\"title\">Completely ad free.</span>\n";

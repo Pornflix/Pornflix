@@ -208,8 +208,6 @@ class QVideos extends Query {
 		if(isset($id) && isset($tag_id)) {
 			if($result->execute(['video' => $id, 'tag' => $tag_id])) {
 				$encode = ['success' => 'true'];
-			} else {
-				$encode = ['success' => 'false'];
 			}
 		}
 		return $encode;
@@ -223,6 +221,33 @@ class QVideos extends Query {
 			
 			echo json_encode($content);
 		}
+	}
+
+	function incrementViews($id = null) {
+		$id = (isset($id) ? $id : $_GET['id']);
+
+		$encode = ['success' => 'false'];
+
+		$sql =  "SELECT views\n" .
+				"FROM videos\n" .
+				"WHERE id = :id";
+
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['id' => $id]);
+		$views = $result->fetch()['views'];
+
+		$sql =  "UPDATE videos\n" .
+				"SET views = :views\n" .
+				"WHERE id = :id";
+
+		$result = $this->mysql->prepare($sql);
+
+		if(isset($views)) {
+			if($result->execute(['views' => $views+1, 'id' => $id])) {
+				$encode = ['success' => 'true'];
+			}
+		}
+		return $encode;
 	}
 }
 
