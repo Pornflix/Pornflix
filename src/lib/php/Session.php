@@ -2,26 +2,20 @@
 
 class Session {
 	private $mysql;
+	private $key;
 
-	function __construct($mysql) {
+	function __construct($mysql, $key) {
 		$this->mysql = $mysql;
-	}
-
-	function isLoggedIn() {
-		
+		$this->key = $key;
 	}
 
 	function logon($formUsername, $formPassword) {
-		$mysqluser = Constants:: getMySQLUser();
-		$mysqlpass = Constants::getMySQLPass();
-		$db = Constants::getDBName();
+		$sql = "SELECT id, username, password FROM users WHERE username = :user LIMIT 1";
 
-		$mysql = new mysqli($host, $mysqluser, $mysqlpass, $db);
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['user' => $formUsername]);
 
-		$sql = "SELECT `id`,`username`,`password` FROM `users` WHERE `username` = \"$formUsername\" LIMIT 1";
-		$result = $mysql->query($sql);
-
-		if($row = $result->fetch_assoc()) {
+		if($row = $result->fetch()) {
 			$userid = $row['id'];
 			$username = $row['username'];
 			$password = $row['password'];
@@ -40,18 +34,17 @@ class Session {
 
 	function authenticate() {
 		if(isset($_SESSION['username'])) {
-			$host = Constants::getMySQLDomain();
-			$mysqluser = Constants:: getMySQLUser();
-			$mysqlpass = Constants::getMySQLPass();
-			$db = Constants::getDBName();
 			$user = $_SESSION['username'];
-			$mysql = new mysqli($host, $mysqluser, $mysqlpass, $db);
-			$sql = "SELECT * FROM `users` WHERE `username`=\"$user\" LIMIT 1";
-			$result = $mysql->query($sql);
 
-			if($row = $result->fetch_assoc()) {
+			$sql = "SELECT * FROM users WHERE username = :user LIMIT 1";
+			$result = $this->mysql->prepare($sql);
+			$result->execute(['user' => $user]);
+
+			if($row = $result->fetch()) {
 				return true;
 			}
+		} else if($this->authenticate()) {
+			return true;
 		}
 		return false;
 	}
@@ -62,6 +55,34 @@ class Session {
 		$sql = "UPDATE users SET password = :password WHERE id = :id;";
 		$stmt = $this->mysql->prepare($sql);
 		$stmt->execute(array('id' => $userid, 'password' => $password));
+	}
+
+	function authenticate() {
+		if(!isset($_COOKIE['rememberme']) || empty($_COOKIE['rememberme'])) {
+			return false;
+		}
+
+		if(!$cookie = json_decode($_COOKIE['rememberme'], true)) {
+			return false;
+		}
+
+		if(!(isset($cookie['user']) || isset($cookie['token']) || isset($cookie['mac']))) {
+			return false;
+		}
+
+		$var = $cookie['user'] . $cookie['token'];
+
+		if(!hash_equals(hash_hmac('sha256', $var, $this->key), $cookie['mac'])) {
+			return false;
+		}
+
+		if(hash_equals($usertoken, $token)) {
+			$_SESSION['user'] = $user;
+		}
+	}
+
+	function remember() {
+		
 	}
 }
 

@@ -52,6 +52,10 @@ class Constants implements Configuration {
 			return self::SFW_FEED_NAMES;
 		}
 	}
+
+	static function getRememberMeKey() {
+		return self::REMEMBER_ME_KEY;
+	}
 }
 
 ?>

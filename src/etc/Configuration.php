@@ -20,6 +20,8 @@ interface Configuration {
 	const SFW_FEED_NAMES = ["All", "New", "Comedy"];
 	const NSFW_FEED_NAMES = ["All", "Newest", "Anal"];
 
+	const REMEMBER_ME_KEY = "awuieflakjshlfkja";
+
 	const PREVIVEW_SIZE = 200;
 }
 

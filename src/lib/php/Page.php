@@ -9,7 +9,8 @@ class Page {
 
 		$mysql = (new MySQL())->conn;
 		$constants = new Constants();
-		$session = new Session($mysql);
+
+		$session = new Session($mysql, Constants::getRememberMeKey());
 
 		if($method == 'POST') {
 			if(isset($_POST['command'])) {
