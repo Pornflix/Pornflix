@@ -9,7 +9,7 @@ class Session {
 		$this->key = $key;
 	}
 
-	function logon($formUsername, $formPassword) {
+	function logon($formUsername, $formPassword, $rememberMe) {
 		$sql = "SELECT id, username, password FROM users WHERE username = :user LIMIT 1";
 
 		$result = $this->mysql->prepare($sql);
@@ -21,29 +21,36 @@ class Session {
 			$password = $row['password'];
 
 			if(password_verify($formPassword, $password)) {
-				$_SESSION['userid'] = $userid;
-				$_SESSION['username'] = $username;
+				$_SESSION['user'] = $userid;
+
+				if($rememberMe === "on") {
+					$this->remember($userid);
+				}
 			}
 		}
+
 	}
 
 	function logoff() {
 		session_unset();
 		session_destroy();
+
+		unset($_COOKIE['rememberme']);
+		setcookie('rememberme', null, -1, '/');
 	}
 
 	function authenticate() {
-		if(isset($_SESSION['username'])) {
-			$user = $_SESSION['username'];
+		if(isset($_SESSION['user'])) {
+			$user = $_SESSION['user'];
 
-			$sql = "SELECT * FROM users WHERE username = :user LIMIT 1";
+			$sql = "SELECT id FROM users WHERE id = :id LIMIT 1";
 			$result = $this->mysql->prepare($sql);
-			$result->execute(['user' => $user]);
+			$result->execute(['id' => $user]);
 
 			if($row = $result->fetch()) {
 				return true;
 			}
-		} else if($this->authenticate()) {
+		} else if($this->validateCookie()) {
 			return true;
 		}
 		return false;
@@ -52,13 +59,13 @@ class Session {
 	function changePassword($userid, $password) {
 		$newPassword = password_hash($password, PASSWORD_DEFAULT);
 
-		$sql = "UPDATE users SET password = :password WHERE id = :id;";
-		$stmt = $this->mysql->prepare($sql);
-		$stmt->execute(array('id' => $userid, 'password' => $password));
+		$sql = "UPDATE users SET password = :password WHERE id = :id";
+		$result = $this->mysql->prepare($sql);
+		$result->execute(array('id' => $userid, 'password' => $newPassword));
 	}
 
-	function authenticate() {
-		if(!isset($_COOKIE['rememberme']) || empty($_COOKIE['rememberme'])) {
+	function validateCookie() {
+		if(empty($_COOKIE['rememberme'])) {
 			return false;
 		}
 
@@ -66,23 +73,58 @@ class Session {
 			return false;
 		}
 
-		if(!(isset($cookie['user']) || isset($cookie['token']) || isset($cookie['mac']))) {
+		if(!(isset($cookie['ref']) || isset($cookie['token']) || isset($cookie['mac']))) {
 			return false;
 		}
 
-		$var = $cookie['user'] . $cookie['token'];
+		$var = $cookie['ref'] . $cookie['token'];
 
-		if(!hash_equals(hash_hmac('sha256', $var, $this->key), $cookie['mac'])) {
+		if(!hash_equals(bin2hex(hash_hmac('sha256', $var, $this->key)), $cookie['mac'])) {
 			return false;
 		}
 
-		if(hash_equals($usertoken, $token)) {
-			$_SESSION['user'] = $user;
+		$sql =  "SELECT user, token\n" .
+				"FROM user_sessions\n" .
+				"WHERE reference = :ref";
+
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['ref' => $cookie['ref']]);
+
+		if($row = $result->fetch()) {
+			$userid = $row['user'];
+			$token = $row['token'];
+		}
+
+		if(hash_equals($cookie['token'], $token)) {
+			$_SESSION['user'] = $userid;
 		}
 	}
 
-	function remember() {
-		
+	function remember($user) {
+        $cookie = [
+                "ref" => bin2hex(mcrypt_create_iv(16, MCRYPT_DEV_URANDOM)),
+                "token" => bin2hex(mcrypt_create_iv(64, MCRYPT_DEV_URANDOM)),
+                "mac" => null
+        ];
+
+		$cookie['mac'] = bin2hex(hash_hmac('sha256', $cookie['ref'] . $cookie['token'], $this->key));
+        $encoded = json_encode($cookie);
+
+		$timestamp = strtotime("+7 day");
+		$expiry = date("Y-m-d H:i:s", $timestamp);
+
+		$sql =  "INSERT INTO user_sessions (user, reference, token, expiry)\n" .
+				"VALUES (:user, :ref, :token, :expiry)";
+
+		$result = $this->mysql->prepare($sql);
+		$result->execute([
+			'user' => $user,
+			'ref' => $cookie['ref'],
+			'token' => $cookie['token'],
+			'expiry' => $expiry
+		]);
+
+        setcookie("rememberme", $encoded);
 	}
 }
 

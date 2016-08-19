@@ -67,6 +67,7 @@ class Splash {
 		$content .= "\t\t\t\t\t<input id=\"sign-in-input\" type=\"text\" name=\"user\" required autofocus>\n";
 		$content .= "\t\t\t\t\t<span id=\"sign-in-subtitle\">Password</span>\n";
 		$content .= "\t\t\t\t\t<input id=\"sign-in-input\" type=\"password\" name=\"pass\" required>\n";
+		$content .= "\t\t\t\t\t<input id=\"remember-me-checkbox\" type=\"checkbox\" name=\"remember-me\">Remember me on this device\n";
 		$content .= "\t\t\t\t\t<button id=\"sign-in-submit\" type=\"submit\">Sign In</button>\n";
 		$content .= "\t\t\t\t</form>\n";
 		$content .= "\t\t\t</div>\n";
