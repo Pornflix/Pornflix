@@ -74,6 +74,37 @@ Helper.addTag = function(id) {
 	new XHR("?ws=QVideos&method=addTag&id=" + id + "&tag=" + tag);
 };
 
+Helper.changeTag = function(id, tag) {
+	var startraw = prompt("Start:").split(":");
+	var endraw = prompt("End:").split(":");
+
+	var start = startraw[0] * 60 + parseInt(startraw[1]);
+	var end = endraw[0] * 60 + parseInt(endraw[1]);
+
+	new XHR("?ws=QVideos&method=changeTag&id=" + id + "&tag=" + tag + "&start=" + start + "&end=" + end);
+}
+
+Helper.videoTag = function(raw_time) {
+	var time = JSON.parse(raw_time);
+	var myPlayer = videojs("video");
+
+	time.sort(function (a,b) {
+		return a.start - b.start;
+	});
+
+	var i = 0;
+	while(myPlayer.currentTime() > time[i].start) {
+		i++;
+
+		if(!time[i]) {
+			i = 0;
+			break;
+		}
+	}
+
+	myPlayer.currentTime(time[i].start);
+}
+
 Helper.getRandomDescription = function() {
 	new XHR("?ws=QVideos&method=getRandomDescription",
 	Helper.setRandomDescription);

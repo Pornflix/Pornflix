@@ -35,8 +35,18 @@ class Session {
 		session_unset();
 		session_destroy();
 
-		unset($_COOKIE['rememberme']);
-		setcookie('rememberme', null, -1, '/');
+		if(isset($_COOKIE['rememberme'])) {
+			$cookie = json_decode($_COOKIE['rememberme'], true);
+
+			$sql =  "DELETE FROM user_sessions\n" .
+					"WHERE reference = :ref";
+
+			$result = $this->mysql->prepare($sql);
+			$result->execute(['ref' => $cookie['ref']]);
+
+			unset($_COOKIE['rememberme']);
+			setcookie('rememberme', null, -1, '/');
+		}
 	}
 
 	function authenticate() {

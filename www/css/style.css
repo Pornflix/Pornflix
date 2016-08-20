@@ -347,6 +347,10 @@ a {
 	clear: both;
 }
 
+.video .tags-link {
+	display: inline-block;
+}
+
 .video .tags-item {
 	margin: 3px 0 3px 5px;
 	padding: 2px 5px;

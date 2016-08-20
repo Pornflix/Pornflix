@@ -124,7 +124,7 @@ class QVideos extends Query {
 			}
 		}
 
-		$sql =  "SELECT tags.id, tags.name, tags.type\n" .
+		$sql =  "SELECT tags.id, tags.name, tags.type, video_tags.id AS video_tag\n" .
 				"FROM tags\n" .
 				"LEFT JOIN video_tags ON video_tags.tag = tags.id\n" .
 				"WHERE video = :id";
@@ -132,6 +132,7 @@ class QVideos extends Query {
 		$result = $this->mysql->prepare($sql);
 		$result->execute(['id' => $id]);
 
+		$i = 0;
 		while($row = $result->fetch()) {
 			$sql =  "SELECT COUNT(id) AS num\n" .
 					"FROM video_tags\n" .
@@ -144,9 +145,25 @@ class QVideos extends Query {
 			if($row1 = $result1->fetch()) {
 				array_push($encode[2]['tag'], [
 					'name' => $row['name'],
-					'count' => $row1['num']
+					'count' => $row1['num'],
+					'times' => array()
 				]);
+
+				$sql =  "SELECT start, end\n" .
+						"FROM video_tags_times\n" .
+						"WHERE video_tag = :video_tag";
+
+				$result2 = $this->mysql->prepare($sql);
+				$result2->execute(['video_tag' => $row['video_tag']]);
+
+				while($row2 = $result2->fetch()) {
+					array_push($encode[2]['tag'][$i]['times'], [
+						'start' => $row2['start'],
+						'end' => $row2['end']
+					]);
+				}
 			}
+			$i++;
 		}
 		array_push($encode[2]['tag'], ['name' => 'Add tag', 'count' => '+']);
 
@@ -200,8 +217,8 @@ class QVideos extends Query {
 			$tag_id = $row['id'];
 		}
 
-		$sql =  "INSERT INTO video_tags(video, tag, date)\n" .
-				"VALUES(:video, :tag, CURRENT_TIMESTAMP)";
+		$sql =  "INSERT INTO video_tags (video, tag, date)\n" .
+				"VALUES (:video, :tag, CURRENT_TIMESTAMP)";
 
 		$result = $this->mysql->prepare($sql);
 
@@ -213,14 +230,35 @@ class QVideos extends Query {
 		return $encode;
 	}
 
-	function process() {
-		if(isset($_GET['method'])) {
-			$method = $_GET['method'];
+	function changeTag($id = null, $tag = null, $start = null, $end = null) {
+		$id = (isset($id) ? $id : $_GET['id']);
+		$tag = (isset($tag) ? $tag : $_GET['tag']);
+		$start = (isset($start) ? $start : $_GET['start']);
+		$end = (isset($end) ? $end : $_GET['end']);
 
-			$content = $this->$method();
-			
-			echo json_encode($content);
+		$encode = ['success' => 'false'];
+
+		$sql =  "SELECT video_tags.id\n" .
+				"FROM video_tags\n" .
+				"LEFT JOIN tags ON tags.id = video_tags.tag\n" .
+				"WHERE tags.name = :tag AND video_tags.video = :id";
+
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['tag' => $tag, 'id' => $id]);
+
+		$videotagid = $result->fetch()['id'];
+
+		$sql =  "INSERT INTO video_tags_times (video_tag, start, end)\n" .
+				"VALUES (:video_tag, :start, :end)";
+
+		$result = $this->mysql->prepare($sql);
+
+		if(isset($videotagid) && isset($start) && isset($end)) {
+			if($result->execute(['video_tag' => $videotagid, 'start' => $start, 'end' => $end])) {
+				$encode = ['success' => 'true'];
+			}
 		}
+		return $encode;
 	}
 
 	function incrementViews($id = null) {
@@ -248,6 +286,16 @@ class QVideos extends Query {
 			}
 		}
 		return $encode;
+	}
+
+	function process() {
+		if(isset($_GET['method'])) {
+			$method = $_GET['method'];
+
+			$content = $this->$method();
+			
+			echo json_encode($content);
+		}
 	}
 }
 
