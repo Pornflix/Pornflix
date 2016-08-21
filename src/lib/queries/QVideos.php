@@ -127,7 +127,8 @@ class QVideos extends Query {
 		$sql =  "SELECT tags.id, tags.name, tags.type, video_tags.id AS video_tag\n" .
 				"FROM tags\n" .
 				"LEFT JOIN video_tags ON video_tags.tag = tags.id\n" .
-				"WHERE video = :id";
+				"WHERE video = :id\n" .
+				"ORDER BY tags.name";
 
 		$result = $this->mysql->prepare($sql);
 		$result->execute(['id' => $id]);
