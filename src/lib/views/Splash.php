@@ -2,13 +2,17 @@
 
 class Splash {	
 	public function generate() {
-		if(!isset($_GET['sign-in'])) {
+		if(isset($_GET['sign-in'])) {
 			$content = $this->splashHeader();
-			$content .= $this->splashBody();
+			$content .= $this->splashLogin();
+			$content .= $this->splashFooter();
+		} else if(isset($_GET['sign-up'])) {
+			$content = $this->splashHeader();
+			$content .= $this->splashSignUp();
 			$content .= $this->splashFooter();
 		} else {
 			$content = $this->splashHeader();
-			$content .= $this->splashLogin();
+			$content .= $this->splashBody();
 			$content .= $this->splashFooter();
 		}
 
@@ -42,7 +46,7 @@ class Splash {
 		$content .= "\t\t\t<div id=\"tagline\">\n";
 		$content .= "\t\t\t\t<span id=\"title\">Completely ad free.</span>\n";
 		$content .= "\t\t\t\t<span id=\"subtitle\">HD " . (Constants::getSFW() ? "videos" : "porn") . ". $10 a month.</span>\n";
-		$content .= "\t\t\t\t<a href=\"/\">\n";
+		$content .= "\t\t\t\t<a href=\"/?sign-up\">\n";
 		$content .= "\t\t\t\t\t<span id=\"button\">try free for a month</span>\n";
 		$content .= "\t\t\t\t</a>\n";
 		$content .= "\t\t\t</div>\n";
@@ -77,8 +81,22 @@ class Splash {
 		return $content;
 	}
 
+	function splashSignUp() {
+
+	}
+
 	function splashFooter() {
-		$content = "</body>\n\n";
+		$content = "<script>
+					(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+					(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+					m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+					})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+					ga('create', 'UA-81487339-1', 'auto');
+					ga('send', 'pageview');
+
+					</script>";
+		$content .= "</body>\n\n";
 		$content .= "</html>\n";
 
 		return $content;
