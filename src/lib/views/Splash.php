@@ -1,6 +1,17 @@
 <?php
 
-class Splash {	
+class Splash {
+	private $background;
+
+	function __construct() {
+		if(isset($_SESSION['background'])) {
+			$this->background = $_SESSION['background'];
+		} else {
+			$this->background = rand(1, countDir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
+			$_SESSION['background'] = $this->background;
+		}
+	}
+
 	public function generate() {
 		if(isset($_GET['sign-in'])) {
 			$content = $this->splashHeader();
@@ -36,8 +47,7 @@ class Splash {
 	}
 
 	function splashBody() {
-		$file = rand(1, countdir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
-		$content = "\t<div id=\"system\" style=\"background-image: url('" . Constants::getDataDir() . "/backgrounds/$file');\">\n";
+		$content = "\t<div id=\"system\" style=\"background-image: url('" . Constants::getDataDir() . "/backgrounds/" . $this->background . "');\">\n";
 		$content .= "\t\t<div id=\"container\">\n";
 		$content .= "\t\t\t<div id=\"header\">\n";
 		$content .= "\t\t\t\t<a href=\"/\"><span id=\"logo\">" . Constants::getSiteName() . "</span></a>\n";
@@ -45,9 +55,9 @@ class Splash {
 		$content .= "\t\t\t</div>\n";
 		$content .= "\t\t\t<div id=\"tagline\">\n";
 		$content .= "\t\t\t\t<span id=\"title\">Completely ad free.</span>\n";
-		$content .= "\t\t\t\t<span id=\"subtitle\">HD " . (Constants::getSFW() ? "videos" : "porn") . ". $10 a month.</span>\n";
+		$content .= "\t\t\t\t<span id=\"subtitle\">HD " . (Constants::getSFW() ? "videos" : "porn") . ". Free of charge.</span>\n";
 		$content .= "\t\t\t\t<a href=\"/?sign-up\">\n";
-		$content .= "\t\t\t\t\t<span id=\"button\">try free for a month</span>\n";
+		$content .= "\t\t\t\t\t<span id=\"button\">Sign Up Now</span>\n";
 		$content .= "\t\t\t\t</a>\n";
 		$content .= "\t\t\t</div>\n";
 		$content .= "\t\t</div>\n";
@@ -57,8 +67,7 @@ class Splash {
 	}
 
 	function splashLogin() {
-		$file = rand(1, countDir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
-		$content = "\t<div id=\"system\" style=\"background-image: url('" . Constants::getDataDir() . "/backgrounds/$file');\">\n";
+		$content = "\t<div id=\"system\" style=\"background-image: url('" . Constants::getDataDir() . "/backgrounds/" . $this->background . "');\">\n";
 		$content .= "\t\t<div id=\"container\">\n";
 		$content .= "\t\t\t<div id=\"header\">\n";
 		$content .= "\t\t\t\t<a href=\"/\"><span id=\"logo\">" . Constants::getSiteName() . "</span></a>\n";
@@ -82,7 +91,28 @@ class Splash {
 	}
 
 	function splashSignUp() {
+		$content = "\t<div id=\"system\" style=\"background-image: url('" . Constants::getDataDir() . "/backgrounds/" . $this->background . "');\">\n";
+		$content .= "\t\t<div id=\"container\">\n";
+		$content .= "\t\t\t<div id=\"header\">\n";
+		$content .= "\t\t\t\t<a href=\"/\"><span id=\"logo\">" . Constants::getSiteName() . "</span></a>\n";
+		$content .= "\t\t\t</div>\n";
+		$content .= "\t\t\t<div id=\"sign-up-container\">\n";
+		$content .= "\t\t\t\t<form id=\"sign-up-form\" method=\"post\" name=\"signup\" action=\"/\">\n";
+		$content .= "\t\t\t\t\t<span id=\"sign-up-title\">Sign Up</span>\n";
+		$content .= "\t\t\t\t\t<input type=\"hidden\" name=\"command\" value=\"signup\">\n";
+		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">Email</span>\n";
+		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"email\" name=\"email\" required>\n";
+		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">Username</span>\n";
+		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"text\" name=\"user\" required autofocus>\n";
+		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">password</span>\n";
+		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"password\" name=\"pass\" required>\n";
+		$content .= "\t\t\t\t\t<button id=\"sign-up-submit\" type=\"submit\">Sign Up</button>\n";
+		$content .= "\t\t\t\t</form>\n";
+		$content .= "\t\t\t</div>\n";
+		$content .= "\t\t</div>\n";
+		$content .= "\t</div>\n";
 
+		return $content;
 	}
 
 	function splashFooter() {
