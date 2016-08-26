@@ -66,14 +66,6 @@ class Session {
 		return false;
 	}
 
-	function changePassword($userid, $password) {
-		$newPassword = password_hash($password, PASSWORD_DEFAULT);
-
-		$sql = "UPDATE users SET password = :password WHERE id = :id";
-		$result = $this->mysql->prepare($sql);
-		$result->execute(array('id' => $userid, 'password' => $newPassword));
-	}
-
 	function validateCookie() {
 		if(empty($_COOKIE['rememberme'])) {
 			return false;
@@ -135,6 +127,35 @@ class Session {
 		]);
 
         setcookie("rememberme", $encoded);
+	}
+
+	function signUp($user, $pass, $email) {
+		$sql =  "SELECT id\n" .
+				"FROM users\n" .
+				"WHERE username = :user";
+
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['user' => $user]);
+
+		if($result->fetch()) {
+			return false;
+		}
+
+		$passHash = password_hash($pass, PASSWORD_DEFAULT);
+		$sql =  "INSERT INTO users (username, password, email)\n" .
+				"VALUES (:user, :pass, :email)";
+
+		$result = $this->mysql->prepare($sql);
+		$result->execute(['user' => $user, 'pass' => $passHash, 'email' => $email]);
+}
+
+
+	function changePassword($userid, $password) {
+		$newPassword = password_hash($password, PASSWORD_DEFAULT);
+
+		$sql = "UPDATE users SET password = :password WHERE id = :id";
+		$result = $this->mysql->prepare($sql);
+		$result->execute(array('id' => $userid, 'password' => $newPassword));
 	}
 }
 

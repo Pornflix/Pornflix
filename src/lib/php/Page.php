@@ -19,6 +19,10 @@ class Page {
 						break;
 					case "logoff":
 						$session->logoff();
+						break;
+					case "signup":
+						$session->signUp($_POST['user'], $_POST['pass'], $_POST['email']);
+						break;
 				}
 			}
 

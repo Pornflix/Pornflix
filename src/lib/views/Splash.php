@@ -4,12 +4,13 @@ class Splash {
 	private $background;
 
 	function __construct() {
-		if(isset($_SESSION['background'])) {
+		$this->background = rand(1, countDir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
+		/*if(isset($_SESSION['background'])) {
 			$this->background = $_SESSION['background'];
 		} else {
 			$this->background = rand(1, countDir(Constants::getDataDir() . "/backgrounds/")) . ".jpg";
 			$_SESSION['background'] = $this->background;
-		}
+		}*/
 	}
 
 	public function generate() {
@@ -55,7 +56,7 @@ class Splash {
 		$content .= "\t\t\t</div>\n";
 		$content .= "\t\t\t<div id=\"tagline\">\n";
 		$content .= "\t\t\t\t<span id=\"title\">Completely ad free.</span>\n";
-		$content .= "\t\t\t\t<span id=\"subtitle\">HD " . (Constants::getSFW() ? "videos" : "porn") . ". Free of charge.</span>\n";
+		$content .= "\t\t\t\t<span id=\"subtitle\">HD " . (Constants::getSFW() ? "videos" : "porn") . ". Free as fuck.</span>\n";
 		$content .= "\t\t\t\t<a href=\"/?sign-up\">\n";
 		$content .= "\t\t\t\t\t<span id=\"button\">Sign Up Now</span>\n";
 		$content .= "\t\t\t\t</a>\n";
@@ -104,7 +105,7 @@ class Splash {
 		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"email\" name=\"email\" required>\n";
 		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">Username</span>\n";
 		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"text\" name=\"user\" required autofocus>\n";
-		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">password</span>\n";
+		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">Password</span>\n";
 		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"password\" name=\"pass\" required>\n";
 		$content .= "\t\t\t\t\t<button id=\"sign-up-submit\" type=\"submit\">Sign Up</button>\n";
 		$content .= "\t\t\t\t</form>\n";

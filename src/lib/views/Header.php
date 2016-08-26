@@ -1,6 +1,12 @@
 <?php
 
 class Header {
+	private $mysql;
+
+	function __construct($mysql) {
+		$this->mysql = $mysql;
+	}
+
 	public function generate() {
 		$query = (isset($_GET['query']) ? $_GET['query'] : ""); 
 
@@ -22,7 +28,7 @@ class Header {
 		$content .= "\t\t\t\t<input type=\"hidden\" name=\"command\" value=\"logoff\">\n";
 		$content .= "\t\t\t\t<button class=\"logoff\" type=\"submit\">\n";
 		$content .= "\t\t\t\t\t<span class=\"profile-picture\"></span>\n";
-		$content .= "\t\t\t\t\t<span class=\"profile-name\">" . $_SESSION['user'] . "</span>\n";
+		$content .= "\t\t\t\t\t<span class=\"profile-name\">" . (new QCommon($this->mysql))->getUsername($_SESSION['user']) . "</span>\n";
 		$content .= "\t\t\t\t</button>\n";
 		$content .= "\t\t\t</form>\n";
 		
