@@ -15,6 +15,7 @@ include_once('views/Pornflix.php');
 include_once('views/Search.php');
 include_once('views/Video.php');
 include_once('views/Splash.php');
+include_once('views/More.php');
 include_once('queries/QVideos.php');
 include_once('queries/QSearch.php');
 include_once('queries/QCommon.php');

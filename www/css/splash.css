@@ -138,6 +138,7 @@ body {
 	width: 70%;
 	background-color: #e50914;
 	border: 0;
+	cursor: pointer;
 }
 
 #sign-up-container {
@@ -191,6 +192,7 @@ body {
 	width: 70%;
 	background-color: #e50914;
 	border: 0;
+	cursor: pointer;
 }
 
 #beta-banner {

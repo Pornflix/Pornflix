@@ -20,6 +20,10 @@ class Pornflix {
 				$content .= (new Header($this->mysql))->generate();
 				$content .= (new Search($this->mysql))->generate();
 				break;
+			case "more":
+				$content .= (new Header($this->mysql))->generate();
+				$content .= (new More($this->mysql))->generate();
+				break;
 			default:
 				$content .= (new Header($this->mysql))->generate();
 				$content .= (new HomeFeed($this->mysql))->generate();

@@ -16,6 +16,13 @@ a {
 	color: #FFFFFF;
 }
 
+/* Weird Things */
+
+button::-moz-focus-inner {
+	padding: 0;
+	border: 0;
+}
+
 #system {
 	margin: 0;
 	padding: 0;
@@ -116,34 +123,23 @@ a {
 	display: inline-block;
 }
 
-.header .logoff {
+.header .user-menu {
 	margin: 0;
 	padding: 0;
-	border: 0;
-	background-color: inherit;
-	color: #FFFFFF;
 	float: right;
-	font-size: 16px;
-	height: 60px;
-	text-align: center;
-}
-
-.header .logoff:hover {
-	background-color: #A1141C;
-	cursor: pointer;
-	border: 0;
+	overflow: visible;
 }
 
 .header .profile {
 	margin: 0;
 	padding: 0 10px;
-	overflow: hidden;
-	float: right;
+	display: inline-block;
 	font-size: 16px;
+	float: left;
 }
 
 .header .profile:hover {
-	background-color: #A1141C;
+	background-color: #A1151C;
 }
 
 .header .profile-picture {
@@ -164,6 +160,44 @@ a {
 	float: left;
 	line-height: 60px;
 	min-width: 80px;
+}
+
+.header .dropdown {
+	margin: 0;
+	padding: 0;
+	display: none;
+	background-color: #e50914;
+	width: 100%;
+	float: left;
+	clear: both;
+	text-align: left;
+}
+
+.header .dropdown-item {
+	list-style-type: none;
+	display: block;
+}
+
+.header .dropdown-item:hover {
+	background-color: #A1151C;
+	width: 100%;
+}
+
+.user-menu:hover .dropdown {
+	display: inline-block;
+}
+
+.header .logoff {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	border: 0;
+	background-color: inherit;
+	color: #FFFFFF;
+	font-size: 16px;
+	height: 60px;
+	text-align: left;
+	cursor: pointer;
 }
 
 .footer {

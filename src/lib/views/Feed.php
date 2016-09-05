@@ -13,7 +13,7 @@ class Feed {
 		$content = "\t\t\t<ul class=\"feed-list\" style=\"width: 880px;\">\n";
 		$content .= "\t\t\t\t<div class=\"title\">\n";
 		$content .= "\t\t\t\t\t<span class=\"feed-name\">$feedName</span>\n";
-		$content .= "\t\t\t\t\t<span class=\"more\">More<i class=\"fa fa-chevron-right more-chevron\" aria-hidden=\"true\"></i></span>\n";
+		$content .= "\t\t\t\t\t<a href=\"?view=more&feed=$feedName\"><span class=\"more\">More<i class=\"fa fa-chevron-right more-chevron\" aria-hidden=\"true\"></i></span></a>\n";
 		$content .= "\t\t\t\t</div>\n";
 		
 		$content .= "\t\t\t\t<div class=\"feed-container\">\n";

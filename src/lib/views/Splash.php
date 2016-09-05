@@ -102,9 +102,9 @@ class Splash {
 		$content .= "\t\t\t\t\t<span id=\"sign-up-title\">Sign Up</span>\n";
 		$content .= "\t\t\t\t\t<input type=\"hidden\" name=\"command\" value=\"signup\">\n";
 		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">Email</span>\n";
-		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"email\" name=\"email\" required>\n";
+		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"email\" name=\"email\" required autofocus>\n";
 		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">Username</span>\n";
-		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"text\" name=\"user\" required autofocus>\n";
+		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"text\" name=\"user\" required>\n";
 		$content .= "\t\t\t\t\t<span id=\"sign-up-subtitle\">Password</span>\n";
 		$content .= "\t\t\t\t\t<input id=\"sign-up-input\" type=\"password\" name=\"pass\" required>\n";
 		$content .= "\t\t\t\t\t<button id=\"sign-up-submit\" type=\"submit\">Sign Up</button>\n";
