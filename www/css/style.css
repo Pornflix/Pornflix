@@ -446,3 +446,10 @@ button::-moz-focus-inner {
 	color: #FFFFFF;
 }
 
+.upload.container {
+	margin-top: 60px;
+	padding: 20px 0;
+	background-color: #2b2b2b;
+	display: inline-block;
+	width: 100%;
+}

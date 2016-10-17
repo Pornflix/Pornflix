@@ -22,6 +22,9 @@ class Header {
 		$content .= "\t\t\t\t<a class=\"menu-item-link\">\n";
 		$content .= "\t\t\t\t\t<li class=\"menu-item\">Actors</li>\n";
 		$content .= "\t\t\t\t</a>\n";
+		$content .= "\t\t\t\t<a class=\"menu-item-link\" href=\"?view=upload\">\n";
+		$content .= "\t\t\t\t\t<li class=\"menu-item\">Upload</li>\n";
+		$content .= "\t\t\t\t</a>\n";
 		$content .= "\t\t\t</ul>\n";
 
 		$content .= "\t\t\t<div class=\"user-menu\">\n";

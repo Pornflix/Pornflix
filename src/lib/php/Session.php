@@ -23,6 +23,14 @@ class Session {
 			if(password_verify($formPassword, $password)) {
 				$_SESSION['user'] = $userid;
 
+				$sql = "UPDATE users SET\n" .
+						"login_counter = login_counter + 1,\n" .
+						"last_access = CURRENT_TIMESTAMP\n" .
+						"WHERE id = :user\n";
+
+				$result = $this->mysql->prepare($sql);
+				$result->execute(['user' => $userid]);
+
 				if($rememberMe === "on") {
 					$this->remember($userid);
 				}
